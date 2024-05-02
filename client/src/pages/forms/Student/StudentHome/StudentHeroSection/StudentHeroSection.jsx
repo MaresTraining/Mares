@@ -1,7 +1,7 @@
 import React from "react";
 import "./hero-section.css";
 
-const S_HeroSection = () => {
+const StudentHeroSection = () => {
   return (
    <div className="home-hearo-header">
      <div className="home-hero-header-layout">
@@ -23,4 +23,4 @@ const S_HeroSection = () => {
   );
 };
 
-export default S_HeroSection;
+export default StudentHeroSection;

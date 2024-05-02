@@ -2,10 +2,10 @@ import express from 'express';
 const router = express.Router();
 // updateAccount, deleteAccount ه
 
-import { signin, signup, test ,resetPassword,updateProofileCV,deleteAccount,ViewProfile,ViewCompanyPage} from '../controllers/user.js';
+import { signin, signup, test ,resetPassword,updateProofileCV,deleteAccount,ViewProfile,ViewCompanyPage} from '../controllers/student.js';
 // ,updateProfile,updateCV
-router.post('/signin', signin);
-router.post('/signup', signup);
+router.post('/sign-in', signin);
+router.post('/sign-up', signup);
 router.get('/test', test);
 router.post('/resetPassword', resetPassword);
 router.post('/updateProofileCV', updateProofileCV);//CreateProfile/updateProfile

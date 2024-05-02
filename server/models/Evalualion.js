@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const evaluationsSchema = mongoose.Schema({
   id: {type: String},
  // studentID:{type: Number},
-  //OpportunityID :{type: Number},
-  Comment: {type: String},
+  //opportunityID :{type: Number},
+  comment: {type: String},
   numOiStars:{type: Number},
 });
 
-export default mongoose.model("evaluations",evaluationsSchema);
+export default mongoose.model("Evaluation",evaluationsSchema);

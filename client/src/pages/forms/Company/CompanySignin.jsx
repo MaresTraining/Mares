@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Header from '../../../components/header/header';
+import { useAuthContext } from '../../../contexts/AuthContext';
+import { useSystemContext } from '../../../contexts/SystemContext';
 
 
 
@@ -18,47 +20,24 @@ import Header from '../../../components/header/header';
 
 export default function CompanySignin() {
 
+  const {signIn, error, isCompany, isStudent}= useAuthContext();
+  const {goToPage}= useSystemContext();
+  React.useEffect(() => {
+    if(isCompany){
+      goToPage("company-home");
+    }
+    else if(isStudent){
+      goToPage("student-home");
+    }
+  }, [goToPage, isCompany, isStudent]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
       const cred = new FormData(event.currentTarget);
-      console.log({
+      signIn({
+        role: "company",
         email: cred.get('email'),
-        password: cred.get('password'),
-        
-      });
-
-      const response = await fetch("http://localhost:5000/Company/signinCompany", {
-
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          email: cred.get('email'),
-          password: cred.get('password'),
-        }),
-
-      });
-    const data = await response.json(); 
-
-    // if (!response.ok) {
-    
-    //   console.log(data);
-    //   throw new Error(`Network response was not ok: ${response.statusText}`);
-    // }
-
-    console.log(data); 
-
-    // Store token in localStorage
-    localStorage.setItem("user_token", data.token);
-    console.log("The token is " + localStorage.getItem("user_token"));
-
-  } catch (error) {
-    console.error('Error during fetch:', error);
-  }
-
+      password: cred.get('password'),});
   };
 
 
@@ -124,7 +103,7 @@ export default function CompanySignin() {
               style={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
             >
             <span> تسجيل الدخول</span> 
-            </Button  >
+            </Button>
             <Grid container justifyContent="flex-end"  >
               <Grid item >
               <span >ليس لديك حساب في مارس؟ <a href="/CompanySignup">إنشاء حساب</a></span>  

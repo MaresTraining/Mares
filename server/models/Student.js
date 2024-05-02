@@ -1,0 +1,34 @@
+import mongoose from 'mongoose';
+//هنا اغيرها لستيودنت
+const studentSchema = mongoose.Schema({
+  firstname: {type: String},
+  lastname:  {type: String},
+  email: {type: String,  trim: true, minlength: 5, maxlength: 100, unique: true,required: true},
+  password: {type: String,  trim: true, minlength: 8, required: true},
+  id: {type: String},
+  dateofBirth: {type:Date},
+  phoneNumber:{type:  Number},
+  universityName: {type:String},
+  collegeName: {type:String},//4
+  major: {type:String},
+  academicLevel: {type:String},
+  graduationDate: {type:Date},//6
+  language: {type:String},//7
+  discription: {type: String},//1
+  cv: {type:Object},//2
+  certificates: {type: Object},//3
+  technicalSkills: {type:String},
+  jobRelatedSkills: {type:String},
+  tools: {type:String},
+  administrativeSkills: {type:String},
+  experiences: {type:String},
+  address: {type: String},//وصف كتابي نفس الكومبني
+
+});
+
+studentSchema.methods.saveStudent = function() {
+  return this.save(); // استخدام دالة save() المدمجة في Mongoose لحفظ البيانات في قاعدة البيانات
+};
+
+
+export default mongoose.model("Student",studentSchema);

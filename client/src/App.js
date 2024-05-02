@@ -1,11 +1,10 @@
 
 import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/header/header";
+import {  Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 
 
-import Student from "./pages/forms/Student/Student";
+// import Student from "./pages/forms/Student/Student";
 
 import StudentSignup from "./pages/forms/Student/StudentSignup";
 import StudentSignin from "./pages/forms/Student/StudentSignin";
@@ -24,13 +23,7 @@ import CompanySignin from "./pages/forms/Company/CompanySignin";
 import CompanySignup from "./pages/forms/Company/CompanySignup";
 ////////////////
 // Material UI imports
-import Chip from "@mui/material/Chip";
-import FaceIcon from "@mui/icons-material/Face";
-import Paper from "@mui/material/Paper";
-import LockIcon from "@mui/icons-material/Lock";
 
-import Switch from "@mui/material/Switch";
-import { useState } from "react"
 import CompanyHome from './pages/forms/Company/CompanyHome/CompanyHome';
 import CreateOpportunity from './pages/forms/Company/CreateOpportunity';
 import Cinfo from './pages/forms/Company/Cinfo';
@@ -45,45 +38,45 @@ import DisplayUnavailable from './pages/forms/Company/DisplayUnavailable';
 import DisplayCompleted from './pages/forms/Company/DisplayCompleted';
 import ViewCompanyProfile from './pages/forms/Company/ViewCompanyProfile';
 import ViewStudentProfile from './pages/forms/Student/ViewStudentProfile';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { useSystemContext } from './contexts/SystemContext';
+import Toast from './components/Toast';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  <HeroSection/>
+  const { toast, hideToast, loading } = useSystemContext();
   
+  <HeroSection />
+
   return (
-    
+    <div >
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/student-sign-in" element={<StudentSignin />} />
+        <Route path="/student-sign-up" element={<StudentSignup />} />
+        {/* <Route path="/student" element={<Student />} /> */}
+        <Route path="/company" element={<Company />} />
+        <Route path="/company-sign-in" element={<CompanySignin />} />
+        <Route path="/company-sign-up" element={<CompanySignup />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/student-home" element={<StudentHome />} />
+        <Route path="/test" element={<Test />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/resume" element={<Resume />} />
+        <Route path="/company-home" element={<CompanyHome />} />
+        <Route path="/create-opportunity" element={<CreateOpportunity />} />
+        <Route path="/cinfo" element={<Cinfo />} />
+        <Route path="/dispaly-opportunities" element={<DispalyOpportunities />} />
+        <Route path="/manage-requests" element={<ManageRequests />} />
+        <Route path="/view-requests" element={<ViewRequests />} />
+        <Route path="/select-student" element={<SelectStudent />} />
+        <Route path="/accepted-student" element={<AcceptedStudent />} />
+        <Route path="/display-published" element={<DisplayPublished />} />
+        <Route path="/display-unavailable" element={<DisplayUnavailable />} />
+        <Route path="/display-completed" element={<DisplayCompleted />} />
+        <Route path="/view-company-profile" element={<ViewCompanyProfile />} />
+        <Route path="/view-student-profile" element={<ViewStudentProfile />} />
 
-    <BrowserRouter >
-     
-
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/StudentSignin" element={<StudentSignin />} />
-  <Route path="/StudentSignup" element={<StudentSignup />} />
-  <Route path="/Student" element={<Student />} />
-  <Route path="/Company" element={<Company />} />
-  <Route path="/CompanySignin" element={<CompanySignin />} />
-  <Route path="/CompanySignup" element={<CompanySignup />} />
-<Route path="/ResetPassword" element={<ResetPassword/>} />
-<Route path="/StudentHome" element={<StudentHome/>} />
-<Route path="/Test" element={<Test/>} />
-<Route path="/Profile" element={<Profile/>} />
-<Route path="/Resume" element={<Resume/>} />
-<Route path="/CompanyHome" element={<CompanyHome/>} />
-<Route path="/CreateOpportunity" element={<CreateOpportunity/>} />
-<Route path="/Cinfo" element={<Cinfo/>} />
-<Route path="/DispalyOpportunities" element={<DispalyOpportunities/>} />
-<Route path="/ManageRequests" element={<ManageRequests/>} />
-<Route path="/ViewRequests" element={<ViewRequests/>} />
-<Route path="/SelectStudent" element={<SelectStudent/>} />
-<Route path="/AcceptedStudent" element={<AcceptedStudent/>} />
-<Route path="/DisplayPublished" element={<DisplayPublished/>} />
-<Route path="/DisplayUnavailable" element={<DisplayUnavailable/>} />
-<Route path="/DisplayCompleted" element={<DisplayCompleted/>} />
-<Route path="/ViewCompanyProfile" element={<ViewCompanyProfile/>} />
-<Route path="/ViewStudentProfile" element={<ViewStudentProfile/>} />
-
-<Route path="/CommentBox" element={<CommentBox/>} />
+        <Route path="/comment-box" element={<CommentBox />} />
 
 
 
@@ -96,17 +89,28 @@ function App() {
 
 
 
-  
-
-</Routes>
-<Footer />
-
-    </BrowserRouter>
 
 
+      </Routes>
+      <Footer />
 
-  ); 
-  
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Toast
+        position={1}
+        text={toast.text}
+        open={toast.open}
+        type={toast.type}
+      />
+
+    </div>
+
+
+  );
+
 }
 
 

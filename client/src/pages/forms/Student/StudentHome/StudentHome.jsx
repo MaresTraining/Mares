@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './StudentHome.css'
 import StudentHeader from './StudentHeader/StudentHeader'
-import S_HeroSection from './S_HeroSection/S_HeroSection';
-import Sidebar from './Sidebar';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Box } from '@mui/material';
+import StudentHeroSection from './StudentHeroSection/StudentHeroSection';
+import { useAuthContext } from '../../../../contexts/AuthContext';
+import { useSystemContext } from '../../../../contexts/SystemContext';
 
 
 
 const StudentHome = () => {
+  const { hasLogin} = useAuthContext();
+  const {goToPage} = useSystemContext();
+  useEffect(() => {
+    if(!hasLogin){
+      goToPage("/");
+    }
+  }, [goToPage, hasLogin]);
+
   return (
     <div >
       
       <StudentHeader />
-      < S_HeroSection />
+      <StudentHeroSection />
     
     
       <br></br>

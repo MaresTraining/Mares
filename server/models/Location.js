@@ -8,4 +8,4 @@ const LocationsSchema = mongoose.Schema({
   address: {type: String},//وصف كتابي
 });
 
-export default mongoose.model("Locations",LocationsSchema);
+export default mongoose.model("Location",LocationsSchema);

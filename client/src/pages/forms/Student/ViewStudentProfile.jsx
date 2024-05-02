@@ -69,9 +69,6 @@ function  viewCard({ FirstName, LastName, Discription, Experiences, Skills ,imag
   );
 }
 
-
-
-
 export default function ViewStudentProfile() {
   
   const view = [

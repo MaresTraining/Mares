@@ -15,20 +15,18 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SchoolIcon from '@mui/icons-material/School'; 
 import ListItemIcon from '@mui/material/ListItemIcon';
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Box from '@mui/material/Box';
+import { useAuthContext } from '../../../../contexts/AuthContext';
 
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+  const {signOut}= useAuthContext()
   const { window } = props;
   const Navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -142,6 +140,10 @@ function ResponsiveDrawer(props) {
             sx={{ textAlign:"start" }}
             primary="تسجيل الخروج" 
             style={{fontFamily: 'Tajawal'}}
+            onClick={(e)=>{
+              signOut();
+            }}
+
             />
           </ListItemButton>
         </ListItem>

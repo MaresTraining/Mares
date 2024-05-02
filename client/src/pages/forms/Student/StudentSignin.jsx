@@ -4,60 +4,37 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Header from '../../../components/header/header';
+import { useSystemContext } from '../../../contexts/SystemContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 
 
 
 export default function StudentSignin() {
+  const {signIn, error, isCompany, isStudent}= useAuthContext();
+  const {goToPage}= useSystemContext();
+  React.useEffect(() => {
+    if(isCompany){
+      goToPage("company-home");
+    }
+    else if(isStudent){
+      goToPage("student-home");
+    }
+  }, [goToPage, isCompany, isStudent]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
       const cred = new FormData(event.currentTarget);
-      console.log({
+      signIn({
+        role: "student",
         email: cred.get('email'),
-        password: cred.get('password'),
-        
-      });
-
-      const response = await fetch("http://localhost:5000/user/signin", {
-
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          email: cred.get('email'),
-          password: cred.get('password'),
-        }),
-
-      });
-    const data = await response.json(); 
-
-    // if (!response.ok) {
-    
-    //   console.log(data);
-    //   throw new Error(`Network response was not ok: ${response.statusText}`);
-    // }
-
-    console.log(data); 
-
-    // Store token in localStorage
-    localStorage.setItem("user_token", data.token);
-    console.log("The token is " + localStorage.getItem("user_token"));
-
-  } catch (error) {
-    console.error('Error during fetch:', error);
-  }
-
+      password: cred.get('password'),});
   };
 
   

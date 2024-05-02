@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import user from '../models/user.js';
+import Student from '../models/Student.js';
 
 const secret = 'app';
 
@@ -11,22 +11,22 @@ export const signin = async (req, res) => {
    const { email,password } = req.body;
    console.log(req.body);
    try {
-      const existingUser = await user.findOne({email: email});
-      console.log('existingUser: ', existingUser);
-      if(!existingUser){
+      const existingStudent = await Student.findOne({email: email});
+      console.log('existingStudent: ', existingStudent);
+      if(!existingStudent){
          console.log("uesr dosen't exist")
          return  res.status(404).json({message:"uesr dosen't exist"});
       } 
       
-      const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+      const isPasswordCorrect = await bcrypt.compare(password, existingStudent.password);
       
       if(!isPasswordCorrect){
          console.log("invalied Password")
          return  res.status(400).json({message:"invalied Password"});
       }
-      const token = jwt.sign({email: existingUser.email, id:existingUser._id},secret,{expiresIn:"1h"});//app=env file
-      console.log("user signed in")
-      res.status(200).json({result: existingUser, token, message:"user signed in" });
+      const token = jwt.sign({email: existingStudent.email, id:existingStudent._id},secret,{expiresIn:"1h"});//app=env file
+      console.log("student signed in")
+      res.status(200).json({result: existingStudent, token, message:"student signed in" });
    } catch (error) {
       console.log('ERROR')
       res.status(500).json({message:'حدث خطأ ما!'});
@@ -38,9 +38,9 @@ export const signup = async (req, res) => {
    const {firstname, lastname, email, password, confirmPassword} = req.body;
    console.log(req.body) ;
     try {
-       const existingUser = await user.findOne({email: email});
-       console.log(existingUser);
-       if(existingUser)
+       const existingStudent = await Student.findOne({email: email});
+       console.log(existingStudent);
+       if(existingStudent)
         return res.status(400).json({message:"الحساب موجود مسبقا!"});
    //اذا فيه ايرور ارجع لذا    
    function checkPassword(password, confirmPassword) {
@@ -51,10 +51,10 @@ export const signup = async (req, res) => {
         return res.status(400).json({message:"كلمة المرور غير متطابقة"});
        
        const hashPassword = await bcrypt.hash(password,12);
-       const result = await user.create({firstname, lastname,email,password: hashPassword });
+       const result = await Student.create({firstname, lastname,email,password: hashPassword });
        const token = jwt.sign({email: result.email, id:result._id},secret,{expiresIn:"1h"});//app=env file
        
-       res.status(200).json({result, token, message:"New user added"});
+       res.status(200).json({result, token, message:"New student added"});
    
     } catch (error) {
        res.status(500).json({message:'حدث خطأ ما!'});
@@ -67,12 +67,12 @@ export const signup = async (req, res) => {
    export const resetPassword = async (req, res) => {
       const { email, newPassword } = req.body;
       try {
-      const existingUser = await user.findOne({ email });
-      if (!existingUser) 
+      const existingStudent = await Student.findOne({ email });
+      if (!existingStudent) 
         return res.status(404).sed("الحساب غير مسجل مسبقا!");
       
         const hashPassword = await bcrypt.hash(newPassword,12);
-        const result = await user.update(user._id, { password: hashPassword });//ارجع له
+        const result = await Student.update(student._id, { password: hashPassword });//ارجع له
         return res.status(200).json({message:"تم تغيير كلمة المرور بنجاح"});
       }
       catch (error) {
@@ -88,18 +88,18 @@ export const signup = async (req, res) => {
 export const updateProofileCV = async (req, res) => {
    const { email, ...updateData } = req.body;
    // console.log('req.body: ',req.body)
-   user.findOneAndUpdate(
-      { email: email }, // find user by his email
-      updateData, // user data to be updated from req.body such as Certificates, CollegeName etc...
+   Student.findOneAndUpdate(
+      { email: email }, // find student by his email
+      updateData, // student data to be updated from req.body such as Certificates, CollegeName etc...
       { new: true }, // to return the opdated object
       (err, doc) => { // CallBack function
             if (err) {
                console.log("Something went wrong when updating data!");
                return res.status(400).json({message:'حدث خطأ من الخادم'});
             }if (!doc) {
-               return res.status(404).json({ message: "User not found" });
+               return res.status(404).json({ message: "Student not found" });
             }
-               console.log("User document  updated! :", doc);
+               console.log("Student document  updated! :", doc);
                res.status(200).json({message:'تم التحديث بنجاح'});
          }
    );
@@ -109,7 +109,7 @@ export const updateProofileCV = async (req, res) => {
 export const deleteAccount = async (req, res) => {
    try {
 
-      const result = await user.deleteOne(user._id);
+      const result = await Student.deleteOne(student._id);
       return res.status(200).json({message:"تم حذف الحساب بنجاح"});
 
       } catch (error) {
@@ -167,6 +167,6 @@ export const ViewRequest = async (req, res) => {
 };
 
 export const test = async (req, res) => { 
-   // const existingUser = await user.find();
+   // const existingStudent = await Student.find();
    res.json("HELLO");
 };
