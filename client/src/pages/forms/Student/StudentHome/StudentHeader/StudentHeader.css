@@ -1,0 +1,31 @@
+.header-logo {
+  width: 200px;
+  height: 100px;
+  background-image: url('./mareslogo.png'); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Snav-links {
+  display: flex;
+  align-items: center;
+
+}
+
+.Snav-link {
+  margin-right: 12px; /* Adjust margin-right for space between items */
+  margin-left: 12px;
+  cursor: pointer;
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.Snav-link:last-child {
+  margin-right: 0; /* Remove margin-right for the last item to avoid extra space */
+}
+
+.Snav-link:hover {
+  color: var(--gray-color);
+}
