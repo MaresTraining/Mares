@@ -11,8 +11,9 @@ const companySchema = mongoose.Schema({
   firstNameOfTheOfficial: {type:String},
   lastNameOfTheOfficial: {type:String},
   jobTitle: {type:String},
-  companyAddress: {type:String},
-  descriptionCompany: {type:String},
+  companyLocation: {type:String},
+  typeOfTheJob: {type:String},
+  workDescription: {type:String},
   companyImage: {  type: Object, default: { url: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png", publicId: null,}},
   socialMedia: {type:String},
   address: {type: String},// اناقش البنات +وصف كتابي

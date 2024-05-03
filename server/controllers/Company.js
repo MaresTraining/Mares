@@ -88,7 +88,7 @@ export const testCompany = async (req, res) => {
   
 // // update profile
 
-export const updateProofileCV = async (req, res) => {
+export const updateProfileCV = async (req, res) => {
    const { email, ...updateData } = req.body;
    console.log('req.body: ',req.body)
    Company.findOneAndUpdate(
@@ -97,12 +97,12 @@ export const updateProofileCV = async (req, res) => {
       { new: true }, // to return the opdated object
       (err, doc) => { // CallBack function
             if (err) {
-               console.log("Something went wrong when updating data!");
+               console.log("حدث خظأ ما!");
                return res.status(400).json({message:'حدث خطأ من الخادم'});
             }if (!doc) {
-               return res.status(404).json({ message: "User not found" });
+               return res.status(404).json({ message: "المستخدم غير موجود" });
             }
-               console.log("User document  updated! :", doc);
+               console.log("تم تغيير البيانات بنجاح :", doc);
                res.status(200).json({message:'تم التحديث بنجاح'});
          }
    );
@@ -126,32 +126,75 @@ export const deleteAccount = async (req, res) => {
 
 //   View Company Profile
 export const ViewProfile = async (req, res) => { 
+   try {
+      const Company = await Company.findById(req.companyId);
+      if (!Company) {
+        return res.status(404).json({ message: 'الشركة غير موجودة' });
+      }
+  
+      return res.status(200).json(Company);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message:  'خطأ في النظام' });
+    }
+
 }
 
 //   View Student Page
 export const ViewStudentPage = async (req, res) => { 
+
+try {
+      const Student = await Student.findById(req.studentId);
+      if (!Student) {
+        return res.status(404).json({ message: 'الشركة غير موجودة' });
+      }
+  
+      return res.status(200).json(Student);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message:  'خطأ في النظام' });
+    }
 }
-
-
-export const AddOpportunities = async (req, res) => { 
-   const { CompanyID, GeneralSpecializationField, SpecificSpecializationField, OpportunityName, TrainingType,
-      City, CustomizedTrainingPlans, TrainingDuration, Semester, startAndEndDates, WorkingDays,
-      WorkingHours, TrainingHours, TrainingPlan, NumberOfTrainees, TrainingBonus, Description, Duties, Benefits } = req.body;
-
-  try {  
-    const result = await Opportunities({CompanyID, GeneralSpecializationField, SpecificSpecializationField, OpportunityName, TrainingType,
-      City, CustomizedTrainingPlans, TrainingDuration, Semester, startAndEndDates, WorkingDays,
-      WorkingHours, TrainingHours, TrainingPlan, NumberOfTrainees, TrainingBonus, Description, Duties, Benefits });
-    const token = jwt.sign({email: result.email, id:result._id},secret,{expiresIn:"1h"});//app=env file
-    await Opportunities.save();
-    res.status(200).json({result, token, message:"New Opportunity is added"});
-
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
+      export const AddOpportunities = async (req, res) => { 
+         const {
+            companyID, generalSpecializationField, specificSpecializationField, opportunityName, trainingType,
+            city, customizedTrainingPlans, trainingDuration, semester, startAndEndDates, workingDays,
+            workingHours, trainingHours, trainingPlan, numberOfTrainees, trainingBonus, description, duties, benefits } = req.body;
+         
+        
+          try {
+            const newOpportunity = new Opportunity({
+               companyID, generalSpecializationField, specificSpecializationField, opportunityName, trainingType,
+               city, customizedTrainingPlans, trainingDuration, semester, startAndEndDates, workingDays,
+               workingHours, trainingHours, trainingPlan, numberOfTrainees, trainingBonus, description, duties, benefits
+            });
+            await newOpportunity.save();
+        
+            return res.status(200).json({ message: 'تمت اضافة الفرصة' });
+          } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'خطأ في النظام' });
+          }
+        };
 
 
 //   Select Students
 export const SelectStudents = async (req, res) => { 
+
+   const { studentId } = req.body;
+
+  try {
+    const existingApplicant = await Application.findOne({ studentId });
+    if (existingApplicant) {
+      return res.status(400).json({ message: 'الطالب مُسجل مسبقا' });
+    }
+
+    const newApplicant = new Application({ studentId });
+    await newApplicant.save();
+
+    return res.status(200).json({ message: 'تمت اضافة الطالب ' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'خطأ في النظام' });
+  }
 }

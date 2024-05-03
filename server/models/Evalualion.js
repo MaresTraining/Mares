@@ -1,11 +1,10 @@
 import mongoose from 'mongoose';
 
 const evaluationsSchema = mongoose.Schema({
-  id: {type: String},
- // studentID:{type: Number},
-  //opportunityID :{type: Number},
+  opportunityId: { type: mongoose.Types.ObjectId, ref: 'Opportunity', required: true },
+  studentID:{type: mongoose.Types.ObjectId, ref: 'Student', required: true},
   comment: {type: String},
-  numOiStars:{type: Number},
+  numOfStars:{type: Number},
 });
 
 export default mongoose.model("Evaluation",evaluationsSchema);

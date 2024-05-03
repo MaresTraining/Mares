@@ -85,7 +85,7 @@ export const signup = async (req, res) => {
   
 // // update profile
 
-export const updateProofileCV = async (req, res) => {
+export const updateProfileCV = async (req, res) => {
    const { email, ...updateData } = req.body;
    // console.log('req.body: ',req.body)
    Student.findOneAndUpdate(
@@ -125,16 +125,53 @@ export const deleteAccount = async (req, res) => {
 //   View Student Profile
 export const ViewProfile = async (req, res) => { 
 
+   try {
+      const student = await student.findById(req.studentId);
+      if (!student) {
+        return res.status(404).json({ message: 'الشركة غير موجودة' });
+      }
+  
+      return res.status(200).json(student);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message:  'خطأ في النظام' });
+    }
 
 };
 
 //   View Company Page
 export const ViewCompanyPage = async (req, res) => { 
-
+   try {
+      const company = await company.findById(req.companyId);
+      if (!company) {
+        return res.status(404).json({ message: 'الشركة غير موجودة' });
+      }
+  
+      return res.status(200).json(company);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message:  'خطأ في النظام' });
+    }
 };
 
 //   Filter The Opportunities
 export const FilterTheOpp = async (req, res) => { 
+   const { major, numOfStars } = req.query;
+
+   try {
+      const evaluationResults = await Evaluation.find({ numOfStars });
+      const opportunityIds = evaluationResults.map((evaluation) => evaluation.opportunityId);
+  
+      const filteredOpportunities = await Opportunity.find({
+        major,
+        _id: { $in: opportunityIds },
+      });
+  
+      return res.status(200).json(filteredOpportunities);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Server Error' });
+    }
 
 }
 
@@ -155,7 +192,7 @@ export const SearchForTheOpp = async (req, res) => {
 
 
 //   Registration in the opportunity
-export const RegistrationInTheOppo = async (req, res) => { 
+export const RegistrationInTheOpp = async (req, res) => { 
 }
 
 //   Discover Location
