@@ -21,7 +21,12 @@ const studentSchema = mongoose.Schema({
   jobRelatedSkills: {type:String},
   tools: {type:String},
   administrativeSkills: {type:String},
-  experiences: {type:String},
+  // experiences: {type:String},
+  companyName: {type:String},
+  jobTitle: {type:String},
+  companyLocation: {type:String},
+  typeOfTheJob: {type:String},
+  workDescription: {type:String},
   address: {type: String},//وصف كتابي نفس الكومبني
 
 });
