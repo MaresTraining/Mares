@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Opportunitieschema = mongoose.Schema({
   name: {type: String},
   // CompanyID: {type: Number},
-  companyID: {type: mongoose.Types.ObjectId, ref: 'Company', required: true}, 
+  companyId: {type: mongoose.Types.ObjectId, ref: 'Company', required: true}, 
   generalSpecializationField: {type: String},
   specificSpecializationField: {type: String},
   opportunityName: {type: String},

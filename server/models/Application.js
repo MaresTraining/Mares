@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const applicationSchema= mongoose.Schema({
-  opportunitiesId: [{ type: Schema.Types.ObjectId, ref: 'Opportunity' }],
+  opportunityId: [{ type: Schema.Types.ObjectId, ref: 'Opportunity' }],
   studentId: [{ type: Schema.Types.ObjectId, ref: 'Student' }]
 
 
