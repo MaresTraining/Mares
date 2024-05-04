@@ -11,21 +11,29 @@ import Stack from '@mui/material/Stack';
 
 const Resume = () => {
     const [formData, setFormData] = useState({
-        selfDescription: '',
-        cvFile: null,
-        certificatesFile: null,
+        description: '',
+        cv: null,
+        certificates: null,
         college: '',
-        specialization: '',
+        major: '',
         graduationDate: '',
         language: '',
-        JobTitle:'',
-        CompanyName:'',
-        CompanyLocation: '',
-        TypeOfTheJob: ''
+        academicLevel: '',
+        jobTitle:'',
+        companyName:'',
+        companyLocation: '',
+        typeOfTheJob: '',
+        workDescription: '',
+
+
+        tools: [], // متغير الأدوات
+        administrativeSkills: [], // متغير المهارات الإدارية
+        technicalSkills: [], // متغير المهارات التقنية
+        jobRelatedSkills: [] // متغير المهارات ذات الصلة بالوظيفة
 
     });
 
-    const [levels, setLevels] = useState([]);
+    const [acacademicLevel, setLevels] = useState([]);
 
     useEffect(() => {
         // Simulated data for levels from 'المستوى الأول' to 'المستوى العاشر'
@@ -74,34 +82,37 @@ const Resume = () => {
 
 
     // المهارات الوظيفية
-        const [skills, setSkills] = useState([]);
+    // Job Related Skills
+    const [jobRelatedSkills, setJobRelatedSkills] = useState([]);
+
+    useEffect(() => {
+        // Fetch job-related skills from the server
+        fetch('https://api.example.com/job-skills')
+            .then(response => response.json())
+            .then(data => {
+                // Update state with the job-related skills fetched from the server
+                setJobRelatedSkills(data);
+            })
+            .catch(error => {
+                console.error('Error fetching job-related skills:', error);
+            });
+    }, []);
+
+    const jobRelatedSkillsOptions = [
+        { label: 'الرسوم البيانية', proficiencyLevels: ['مبتدئ', 'متوسط', 'متقدم'] },
+        { label: 'مهارات حسابية', proficiencyLevels: ['مبتدئ', 'متوسط', 'متقدم'] },
+        { label: 'إدارة المشاريع', proficiencyLevels: ['مبتدئ', 'متوسط', 'متقدم'] }
+        // Add more job related skills here if needed
+    ];
     
-        useEffect(() => {
-            // Fetch job-related skills from the server
-            fetch('https://api.example.com/job-skills')
-                .then(response => response.json())
-                .then(data => {
-                    // Update state with the job-related skills fetched from the server
-                    setSkills(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching job-related skills:', error);
-                });
-        }, []);
-    
-        const skillsOptions = [
-            { label: 'الرسوم البيانية', proficiencyLevels: ['مبتدئ', 'متوسط', 'متقدم'] },
-            { label: 'مهارات حسابية', proficiencyLevels: ['مبتدئ', 'متوسط', 'متقدم'] },
-            { label: 'إدارة المشاريع', proficiencyLevels: ['مبتدئ', 'متوسط', 'متقدم'] }
-        ];
-        
-        const optionsWithLevelsskill = skillsOptions.flatMap(skill => (
-            skill.proficiencyLevels.map(level => ({
-                label: `${skill.label} - ${level}`,
-                skill: skill.label,
-                level: level
-            }))
-        ));
+    const jobRelatedSkillsWithOptions = jobRelatedSkillsOptions.flatMap(skill => (
+        skill.proficiencyLevels.map(level => ({
+            label: `${skill.label} - ${level}`,
+            skill: skill.label,
+            level: level
+        }))
+    ));
+
 
 
         //الادوات 
@@ -159,8 +170,8 @@ useEffect(() => {
                 <TextareaAutosize
                     aria-label="self-description"
                     placeholder="اكتب وصفًا عن نفسك..."
-                    name="selfDescription"
-                    value={formData.selfDescription}
+                    name="description"
+                    value={formData.description}
                     onChange={handleChange}
                     style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
                 />
@@ -174,7 +185,7 @@ useEffect(() => {
                     <input
                         type="file"
                         hidden
-                        name="cvFile"
+                        name="cv"
                         onChange={handleChange}
                     />
                 </Button>
@@ -189,7 +200,7 @@ useEffect(() => {
                     <input
                         type="file"
                         hidden
-                        name="certificatesFile"
+                        name="certificates"
                         onChange={handleChange}
                     />
                 </Button>
@@ -197,7 +208,7 @@ useEffect(() => {
                 <Autocomplete
                     disablePortal
                     id="combo-box-level"
-                    options={levels}
+                    options={acacademicLevel}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif' , fontWeight:'bold'}}> المستوى الدراسي</span>} />}
                     style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
@@ -228,7 +239,7 @@ useEffect(() => {
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif' , fontWeight:'bold'}}> التخصص</span>} />}
                     style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
-                    onChange={(event, value) => setFormData({ ...formData, specialization: value ? value.label : '' })}
+                    onChange={(event, value) => setFormData({ ...formData, major: value ? value.label : '' })}
                 />
 
                 <TextField
@@ -266,7 +277,7 @@ useEffect(() => {
                 <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
                     <Autocomplete
                         multiple
-                        id="technical-skills"
+                        id="technicalSkills"
                         options={[
                             { label: 'تحليل البيانات - مبتدئ' },
                             { label: 'تحليل البيانات - متوسط' },
@@ -292,20 +303,21 @@ useEffect(() => {
 
                 
                 <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
-            <Autocomplete
-                multiple
-                id="job-skills"
-                options={optionsWithLevelsskill}
-                getOptionLabel={(option) => option.label}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold' }}>المهارات الوظيفية</span>}
-                        placeholder="المهارات الوظيفية"
-                    />
-                )}
+    <Autocomplete
+        multiple
+        id="job-skills"
+        options={jobRelatedSkillsWithOptions}
+        getOptionLabel={(option) => option.label}
+        renderInput={(params) => (
+            <TextField
+                {...params}
+                label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold' }}>المهارات الوظيفية</span>}
+                placeholder="المهارات الوظيفية"
             />
-        </Stack>
+        )}
+    />
+</Stack>
+
 
 
         <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
@@ -345,44 +357,44 @@ useEffect(() => {
 
                 <TextField
                 margin="normal"
-                name="JobTitle"
+                name="jobTitle"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}> العنوان الوظيفي </span>}
                 value={formData.city}
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
-                onChange={(event, value) => setFormData({ ...formData, JobTitle: value ? value.label : '' })}
+                onChange={(event, value) => setFormData({ ...formData, jobTitle: value ? value.label : '' })}
                 />
 
                  <TextField
                 margin="normal"
-                name="CompanyName"
+                name="companyName"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}>اسم المؤسسة </span>}
                 value={formData.city}
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
-                onChange={(event, value) => setFormData({ ...formData, CompanyName: value ? value.label : '' })}
+                onChange={(event, value) => setFormData({ ...formData, companyName: value ? value.label : '' })}
                 /> 
                 <TextField
                 margin="normal"
-                name="CompanyLocation"
+                name="companyLocation"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}>مكان المؤسسة </span>}
                 value={formData.city}
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
-                onChange={(event, value) => setFormData({ ...formData, CompanyLocation: value ? value.label : '' })}
+                onChange={(event, value) => setFormData({ ...formData, companyLocation: value ? value.label : '' })}
                 /> 
 
                 <TextField
                 margin="normal"
-                name="TypeOfTheJob"
+                name="typeOfTheJob"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}>نوع الوظيفة</span>}
                 value={formData.city}
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
-                onChange={(event, value) => setFormData({ ...formData, TypeOfTheJob: value ? value.label : '' })}
+                onChange={(event, value) => setFormData({ ...formData, typeOfTheJob: value ? value.label : '' })}
                 /> 
                     <h5 style={{marginBottom:'20px'}}>تفاصيل مهام عملك:</h5>
                  <TextareaAutosize
                     aria-label="self-description"
                     placeholder="اكتب تفاصيل مهام عملك ....."
-                    name="selfDescription"
-                    value={formData.selfDescription}
+                    name="workDescription"
+                    value={formData.workDescription}
                     onChange={handleChange}
                     style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
                 />

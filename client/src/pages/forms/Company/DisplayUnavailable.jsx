@@ -1,6 +1,5 @@
 // import React from 'react';
 import CompanyHeader from './CompanyHome/CompanyHeader/CompanyHeader';
-import CompanySidebar from './CompanyHome/CompanySidebar';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
  
@@ -65,7 +64,6 @@ export default function DisplayUnavailable() {
     return (
         <div>
             <CompanyHeader />
-            <CompanySidebar />
 
 
         <Grid container  direction="column" justifyContent="flex-start" alignItems="center" style={{ height: '100vh' }}  columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

@@ -3,13 +3,13 @@ import { TextField, Button, Typography, Rating } from '@mui/material';
 
 const CommentBox = () => {
     const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(0);
+    const [numOfStars, setRating] = useState(0);
 
     // Function to handle submission of the comment
     const handleSubmit = () => {
         // Here you can submit the comment and rating to the database
         console.log('Comment:', comment);
-        console.log('Rating:', rating);
+        console.log('Rating:',numOfStars );
         // Reset the comment and rating after submission
         setComment('');
         setRating(0);
@@ -37,7 +37,7 @@ const CommentBox = () => {
             </Typography>
             <Rating
                 name="rating"
-                value={rating}
+                value={numOfStars}
                 onChange={(event, newValue) => {
                     setRating(newValue);
                 }}

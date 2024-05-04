@@ -14,19 +14,19 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const Cinfo = () => {
     const [formData, setFormData] = React.useState({
-        CompanyName: '',
-        CompanyField: '',
+        companyName: '',
+        companyField: '',
         phone: '',
-        CompanyAddress: '',
+        companyAddress: '',
         city: '',
-        CommercialRegistrationNumber:'',
-        CompanySector:'',
-        DescriptionCompany:'',
-        CompanyImage:'',
-        Facebook:'',
-        Twitter:'',
-        Instagram:'',
-        LinkedIn:'',
+        commercialRegistrationNumber:'',
+        companySector:'',
+        descriptionCompany:'',
+        companyImage:'',
+        facebook:'',
+        twitter:'',
+        instagram:'',
+        linkedIn:'',
     });
 
     const handleChange = (event) => {
@@ -63,9 +63,9 @@ const Cinfo = () => {
             <TextField
                 margin="normal"
                 required
-                name="CompanyName"
+                name="companyName"
                 label= {<span style={{ fontFamily: 'Tajawal, sans-serif'}}>اسم الشركة </span>}
-                value={formData.CompanyName}
+                value={formData.companyName}
                 onChange={handleChange}
                 InputProps={{
                     startAdornment: (
@@ -77,9 +77,9 @@ const Cinfo = () => {
             <TextField
                 margin="normal"
                 required
-                name="CompanyField"
+                name="companyField"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}> مجال الشركة </span>}
-                value={formData.CompanyField}
+                value={formData.companyField}
                 onChange={handleChange}
                
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
@@ -107,9 +107,9 @@ const Cinfo = () => {
 
             <TextField
                 margin="normal"
-                name="CompanyAddress"
+                name="companyAddress"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}> عنوان الشركة </span>}
-                value={formData.CompanyAddress}
+                value={formData.companyAddress}
                 onChange={handleChange}
                 InputProps={{
                     startAdornment: (
@@ -139,9 +139,9 @@ const Cinfo = () => {
    
             <TextField
                 margin="normal"
-                name="CommercialRegistrationNumber"
+                name="commercialRegistrationNumber"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>السجل التجاري </span>}
-                value={formData.CommercialRegistrationNumber}
+                value={formData.commercialRegistrationNumber}
                 onChange={handleChange}
                
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
@@ -154,9 +154,9 @@ const Cinfo = () => {
 
           <TextField
                 margin="normal"
-                name="CompanySector"
+                name="companySector"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>قطاع الشركة</span>}
-                value={formData.CompanySector}
+                value={formData.companySector}
                 onChange={handleChange}
                
                 style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
@@ -166,8 +166,8 @@ const Cinfo = () => {
                 <TextareaAutosize
                     aria-label="self-description"
                     placeholder="اكتب وصفًا عن الشركة..."
-                    name="DescriptionCompany"
-                    value={formData.DescriptionCompany}
+                    name="descriptionCompany"
+                    value={formData.descriptionCompany}
                     onChange={handleChange}
                     style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
                 />
@@ -184,7 +184,7 @@ const Cinfo = () => {
                <input
                  type="file"
                  hidden
-                 name="CompanyImage"
+                 name="companyImage"
                  onChange={handleChange}
                />
                 </Button>
@@ -197,9 +197,9 @@ const Cinfo = () => {
 
                 <TextField
                 margin="normal"
-                name="Facebook"
+                name="facebook"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>فيسبوك</span>}
-                value={formData.Facebook}
+                value={formData.facebook}
                 onChange={handleChange}
                
                 style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
@@ -208,9 +208,9 @@ const Cinfo = () => {
        
                 <TextField
                 margin="normal"
-                name="Twitter"
+                name="twitter"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>تويتر</span>}
-                value={formData.Twitter}
+                value={formData.twitter}
                 onChange={handleChange}
                
                 style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
@@ -219,9 +219,9 @@ const Cinfo = () => {
              
                 <TextField
                 margin="normal"
-                name="Instagram"
+                name="instagram"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>انستقرام</span>}
-                value={formData.Instagram}
+                value={formData.instagram}
                 onChange={handleChange}
                
                 style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
@@ -230,9 +230,9 @@ const Cinfo = () => {
 
                 <TextField
                 margin="normal"
-                name="LinkedIn"
+                name="linkedIn"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>لينكد ان</span>}
-                value={formData.LinkedIn}
+                value={formData.linkedIn}
                 onChange={handleChange}
                
                 style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 

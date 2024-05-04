@@ -7,7 +7,7 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import ChatIcon from '@mui/icons-material/Chat';
 import PublishIcon from '@mui/icons-material/Publish';
  
-function  viewCard({ CompanyName, DescriptionCompany, SocialMedia, Comments ,image }) {
+function  viewCard({ companyName, descriptionCompany, socialMedia, comment ,image }) {
   return (
    
     <Card style={{ fontFamily: 'Tajawal, sans-serif' , display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -19,7 +19,7 @@ function  viewCard({ CompanyName, DescriptionCompany, SocialMedia, Comments ,ima
         <img src={image} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
 
         <Typography variant="h5" gutterBottom style={{ fontFamily: 'Tajawal, sans-serif' }} >
-         اسم الشركة {CompanyName}
+         اسم الشركة {companyName}
         </Typography>
         </Box>
 
@@ -33,7 +33,7 @@ function  viewCard({ CompanyName, DescriptionCompany, SocialMedia, Comments ,ima
 
         <Box style={{ flex: 1, textAlign: 'center', padding: '1rem', border: '3px solid #ccc' , margin: '50px'  }}>
         <Typography variant="h5" gutterBottom style={{ fontFamily: 'Tajawal, sans-serif' }}>
-        وسائل التواصل الإجتماعي{SocialMedia}
+        وسائل التواصل الإجتماعي{socialMedia}
         </Typography>
         </Box>
 
@@ -45,7 +45,7 @@ function  viewCard({ CompanyName, DescriptionCompany, SocialMedia, Comments ,ima
         <Box style={{ flex: 1, textAlign: 'center', padding: '1rem' , border: '3px solid #ccc' , margin: '50px' }}>
           <Typography variant="h6" gutterBottom style={{ fontFamily: 'Tajawal, sans-serif' }}>
           <ContactPageIcon color="disabled" style={{ marginLeft: '400px',fontSize: 50 }} />
-            <strong>تعريف بالشركة:</strong> {DescriptionCompany}
+            <strong>تعريف بالشركة:</strong> {descriptionCompany}
           </Typography>
           </Box>
 
@@ -59,7 +59,7 @@ function  viewCard({ CompanyName, DescriptionCompany, SocialMedia, Comments ,ima
           <Box style={{ flex: 1, textAlign: 'center', padding: '1rem' , border: '3px solid #ccc', margin: '50px'}} >
           <Typography variant="h6" gutterBottom style={{ fontFamily: 'Tajawal, sans-serif' }}>
           <ChatIcon color="disabled" style={{ marginLeft: '400px',fontSize: 50 }} />
-            <strong>التعليقات:</strong> {Comments}
+            <strong>التعليقات:</strong> {comment}
           </Typography>
           </Box>
 
@@ -76,11 +76,11 @@ function  viewCard({ CompanyName, DescriptionCompany, SocialMedia, Comments ,ima
 export default function ViewCompanyProfile() {
   
   const view = [
-    { CompanyName : '', 
-    SocialMedia:'',
-    DescriptionCompany: '..................................', 
+    { companyName : '', 
+    socialMedia:'',
+    descriptionCompany: '..................................', 
 
-    Comments: '..........' }
+    comment: '..........' }
 ]
 
   return ( 
