@@ -33,23 +33,15 @@ export const signinCompany = async (req, res) => {
 }
 
 export const signupCompany = async (req, res) => { 
-   const {CompanyName, CommercialRegistrationNumber, email, password, confirmPassword} = req.body;
+   const company= req.body
    console.log(req.body) ;
     try {
-       const existingUser = await Company.findOne({email: email});
+       const existingUser = await Company.findOne({email: company.email});
        console.log(existingUser);
        if(existingUser)
         return res.status(400).json({message:"الحساب موجود مسبقا!"});
-   //اذا فيه ايرور ارجع لذا    
-   function checkPassword(password, confirmPassword) {
-      if (password === confirmPassword) {return true;} else { return false;}}
-      checkPassword(password, confirmPassword);
-       if(!checkPassword)
-      //  if (password !== confirmPassword)
-        return res.status(400).json({message:"كلمة المرور غير متطابقة"});
        
-       const hashPassword = await bcrypt.hash(password,12);
-       const result = await Company.create({CompanyName, CommercialRegistrationNumber,email,password: hashPassword });
+       const result = await Company.create(company);
        const token = jwt.sign({email: result.email, id:result._id},secret,{expiresIn:"1h"});//app=env file
        
        res.status(200).json({result, token, message:"New user added"});
@@ -89,10 +81,12 @@ export const testCompany = async (req, res) => {
 // // update profile
 
 export const updateProfileCV = async (req, res) => {
-   const { email, ...updateData } = req.body;
+   const  updateData  = req.body;
+   const  {_id } = req.params;
    console.log('req.body: ',req.body)
+   console.log('_id: ',_id)
    Company.findOneAndUpdate(
-      { email: email }, // find user by his email
+      _id, 
       updateData, // user data to be updated from req.body such as Certificates, CollegeName etc...
       { new: true }, // to return the opdated object
       (err, doc) => { // CallBack function

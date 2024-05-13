@@ -1,6 +1,6 @@
 
 import './App.css'
-import {  Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 
 
@@ -41,10 +41,19 @@ import ViewStudentProfile from './pages/forms/Student/ViewStudentProfile';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { useSystemContext } from './contexts/SystemContext';
 import Toast from './components/Toast';
+import { useEffect } from 'react';
 
 function App() {
-  const { toast, hideToast, loading } = useSystemContext();
+  const { toast, error, handleError, showToast, loading } = useSystemContext();
   
+
+  useEffect(() => {
+    if (error) {
+      showToast("error", error);
+      handleError(null);
+    }
+  }, [error, handleError, showToast]);
+
   <HeroSection />
 
   return (

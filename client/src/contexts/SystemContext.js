@@ -33,6 +33,7 @@ export default function SystemContextProvider(props) {
     window.sessionStorage.clear();
   }
 
+  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [isDrawerOpen, setisDrawerOpen] = useState(false);
   const [active, setActive] = useState(null);
@@ -47,14 +48,16 @@ export default function SystemContextProvider(props) {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
-  const showToast = (type, text) => {
-    setToast({ type: type, text: text, open: true, hideToast });
-  };
 
-  const hideToast = () => {
+  function hideToast (){
     setToast({ type: "info", text: "", open: false });
   };
 
+  const showToast = (type, text) => {
+
+    setToast({ type: type, text: text, open: true, hideToast });
+
+  };
 
   const openDrawer = () => {
     setisDrawerOpen(true);
@@ -80,7 +83,12 @@ export default function SystemContextProvider(props) {
   const goToPage=(page)=>{
     navigate(page); 
   }
+  const handleError=(error)=>{
+    setError(error);
+  }
   const value = {
+    handleError,
+    error,
     setSession,
     getSession,
     loading,
@@ -93,7 +101,6 @@ export default function SystemContextProvider(props) {
     openDrawer,
     toast,
     showToast,
-    hideToast,
     resetSession,
     uploadFile,
     screenWidth,

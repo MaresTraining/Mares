@@ -12,7 +12,7 @@ const Features = () => {
       <Grid item xs={12} sm={4}>
         <Box sx={{ border: 1, borderRadius: 2, p: 2, textAlign: 'center',  margin: '30px 30px' }}>
           <VisibilityIcon sx={{ fontSize:30 }} />
-          <Typography variant="h6" sx={{ mt: 2, color: 'mediumaquamarine', fontFamily: 'Tajawal, sans-serif' }}>
+          <Typography variant="h6" sx={{ mt: 2, color: 'mediumaquamarine' }}>
             الرؤية
           </Typography>
           <Typography variant="body1" sx={{fontFamily: 'Tajawal, sans-serif'}}>
@@ -23,7 +23,7 @@ const Features = () => {
       <Grid item xs={12} sm={4}>
         <Box sx={{ border: 1, borderRadius: 2, p: 2, textAlign: 'center',  margin: '30px 30px'  }}>
           <MessageIcon sx={{ fontSize: 30 }} />
-          <Typography variant="h6" sx={{ mt: 2, color: 'mediumaquamarine' , fontFamily: 'Tajawal, sans-serif'}}>
+          <Typography variant="h6" sx={{ mt: 2, color: 'mediumaquamarine' }}>
             الرسالة
           </Typography>
           <Typography variant="body1" sx={{fontFamily: 'Tajawal, sans-serif'}}>
@@ -34,7 +34,7 @@ const Features = () => {
       <Grid item xs={12} sm={4}>
         <Box sx={{ border: 1, borderRadius: 2, p: 2, textAlign: 'center', margin: '30px 30px'  }}>
           <TrendingUpIcon sx={{ fontSize: 30 }} />
-          <Typography variant="h6" sx={{ mt: 2, color: 'mediumaquamarine' , fontFamily: 'Tajawal, sans-serif'}}>
+          <Typography variant="h6" sx={{ mt: 2, color: 'mediumaquamarine' }}>
             الطموح
           </Typography>
           <Typography variant="body1" sx={{fontFamily: 'Tajawal, sans-serif'}}>

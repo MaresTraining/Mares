@@ -173,7 +173,7 @@ useEffect(() => {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
                 />
                 <h4 style={{marginBottom:'20px'}}>تحميل السيرة الذاتية:</h4>
                 <Button
@@ -211,7 +211,7 @@ useEffect(() => {
                     options={acacademicLevel}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif' , fontWeight:'bold'}}> المستوى الدراسي</span>} />}
-                    style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', marginBottom: '20px' }}
                     onChange={(event, value) => setFormData({ ...formData, level: value ? value.label : '' })}
                 />
 
@@ -221,7 +221,7 @@ useEffect(() => {
                     options={[{ label: 'كلية الحاسبات' }]}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif' , fontWeight:'bold' }}> الكلية</span>} />}
-                    style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', marginBottom: '20px' }}
                     onChange={(event, value) => setFormData({ ...formData, college: value ? value.label : '' })}
                 />
 
@@ -238,7 +238,7 @@ useEffect(() => {
                     ]}
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif' , fontWeight:'bold'}}> التخصص</span>} />}
-                    style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', marginBottom: '20px' }}
                     onChange={(event, value) => setFormData({ ...formData, major: value ? value.label : '' })}
                 />
 
@@ -249,13 +249,13 @@ useEffect(() => {
                     type="date"
                     value={formData.graduationDate}
                     onChange={handleChange}
-                    style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', marginBottom: '20px' }}
                     InputLabelProps={{
                         shrink: true,
                     }}
                 />
 
-                <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+                <Stack spacing={3} sx={{ width: '50%', marginBottom: '20px' }}>
                     <Autocomplete
                         multiple
                         id="tags-outlined"
@@ -274,7 +274,7 @@ useEffect(() => {
                 <h3 style={{marginBottom:'20px'}}>المهارات:</h3>
 
 
-                <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+                <Stack spacing={3} sx={{ width: '50%', marginBottom: '20px' }}>
                     <Autocomplete
                         multiple
                         id="technicalSkills"
@@ -302,7 +302,7 @@ useEffect(() => {
                 </Stack>
 
                 
-                <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+                <Stack spacing={3} sx={{ width: '50%', marginBottom: '20px' }}>
     <Autocomplete
         multiple
         id="job-skills"
@@ -320,7 +320,7 @@ useEffect(() => {
 
 
 
-        <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+        <Stack spacing={3} sx={{ width: '50%', marginBottom: '20px' }}>
             <Autocomplete
                 multiple
                 id="tools-skills"
@@ -336,7 +336,7 @@ useEffect(() => {
             />
         </Stack>
 
-        <Stack spacing={3} sx={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+        <Stack spacing={3} sx={{ width: '50%', marginBottom: '20px' }}>
             <Autocomplete
                 multiple
                 id="administrative-skills"
@@ -360,7 +360,7 @@ useEffect(() => {
                 name="jobTitle"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}> العنوان الوظيفي </span>}
                 value={formData.city}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                style={{ width: '50%', marginBottom: '20px' }}
                 onChange={(event, value) => setFormData({ ...formData, jobTitle: value ? value.label : '' })}
                 />
 
@@ -369,7 +369,7 @@ useEffect(() => {
                 name="companyName"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}>اسم المؤسسة </span>}
                 value={formData.city}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                style={{ width: '50%', marginBottom: '20px' }}
                 onChange={(event, value) => setFormData({ ...formData, companyName: value ? value.label : '' })}
                 /> 
                 <TextField
@@ -377,7 +377,7 @@ useEffect(() => {
                 name="companyLocation"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}>مكان المؤسسة </span>}
                 value={formData.city}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                style={{ width: '50%', marginBottom: '20px' }}
                 onChange={(event, value) => setFormData({ ...formData, companyLocation: value ? value.label : '' })}
                 /> 
 
@@ -386,7 +386,7 @@ useEffect(() => {
                 name="typeOfTheJob"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight:'bold'}}>نوع الوظيفة</span>}
                 value={formData.city}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                style={{ width: '50%', marginBottom: '20px' }}
                 onChange={(event, value) => setFormData({ ...formData, typeOfTheJob: value ? value.label : '' })}
                 /> 
                     <h5 style={{marginBottom:'20px'}}>تفاصيل مهام عملك:</h5>
@@ -396,7 +396,7 @@ useEffect(() => {
                     name="workDescription"
                     value={formData.workDescription}
                     onChange={handleChange}
-                    style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
                 />
                     <hr className="mt-0 mb-4" />
                    
@@ -406,7 +406,7 @@ useEffect(() => {
                 <Button
                     onClick={handleSave}
                     variant="contained"
-                    style={{ backgroundColor: 'mediumaquamarine', color: 'black', width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ backgroundColor: 'mediumaquamarine', color: 'black', width: '50%', marginBottom: '20px' }}
                 >
                     حفظ
                 </Button>

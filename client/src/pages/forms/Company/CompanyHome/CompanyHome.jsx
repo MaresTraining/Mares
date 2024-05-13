@@ -18,8 +18,6 @@ const CompanyHome = () => {
         <div>
  <CompanyHeader/>               
 <CompanyHeroSection/>
-<br></br>
-<br></br>
 
 
         </div>

@@ -22,7 +22,7 @@ const CommentBox = () => {
             </Typography>
           
             <TextField
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}> صف تجربتك خلال التدريب </span>} 
+                label={" صف تجربتك خلال التدريب"} 
                 variant="outlined"
                 fullWidth
                 multiline

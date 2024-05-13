@@ -47,7 +47,7 @@ function PersistentDrawer(props) {
     <div>
       <Divider />
       <List sx={{ textAlign: 'center' }}>
-        <Typography textAlign='center' variant="h6" noWrap sx={{ mt: 2, fontFamily: 'Tajawal, sans-serif' }}>
+        <Typography textAlign='center' variant="h6" noWrap sx={{ mt: 2 }}>
           الملف الشخصي
         </Typography>
 

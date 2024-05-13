@@ -39,7 +39,7 @@ const Test = () => {
 
     return (
         <Grid container direction="column" justifyContent="flex-start" alignItems="center" style={{ height: '100vh' }}>
-            <h3 style={{ fontFamily: 'Tajawal, sans-serif' }}>المعلومات الشخصية</h3>
+            <h3 >المعلومات الشخصية</h3>
             <TextField
                 margin="normal"
                 required
@@ -52,7 +52,7 @@ const Test = () => {
                         <PersonIcon />
                     ),
                 }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
+                style={{ width: '50%' }} 
             />
             <br />
             <TextField
@@ -67,7 +67,7 @@ const Test = () => {
                         <PersonIcon />
                     ),
                 }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
+                style={{ width: '50%' }} 
             />
             <TextField
                 margin="normal"
@@ -80,7 +80,7 @@ const Test = () => {
                         <PhoneIcon />
                     ),
                 }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
+                style={{ width: '50%' }} 
             />
             <TextField
                 margin="normal"
@@ -94,7 +94,7 @@ const Test = () => {
                         <EventIcon />
                     ),
                 }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' ,fontWeight: 'bold'}} 
+                style={{ width: '50%' ,fontWeight: 'bold'}} 
             />
             <TextField
                 margin="normal"
@@ -107,7 +107,7 @@ const Test = () => {
                         <LocationCityIcon />
                     ),
                 }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
+                style={{ width: '50%',    }} 
             />
 
 <Button
@@ -115,7 +115,7 @@ const Test = () => {
         type="submit"
       
         sx={{ mt: 3, mb: 2 }}
-        style={{ backgroundColor: 'mediumaquamarine', color: 'black' , width: '50%', fontFamily: 'Tajawal, sans-serif'}}
+        style={{ backgroundColor: 'mediumaquamarine', color: 'black' , width: '50%'}}
       >
       <span> حفظ</span> 
   

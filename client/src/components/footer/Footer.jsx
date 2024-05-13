@@ -1,6 +1,11 @@
 import React from 'react';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 const Footer = () => {
+  const {hasLogin}= useAuthContext();
+  if(!hasLogin){
+    return <></>
+  }
   return (
     <footer style={styles}>
       <div >

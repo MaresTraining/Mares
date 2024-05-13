@@ -120,21 +120,21 @@ const TrainingOpportunity = () => {
                     value={formData.generalSpecializationField}
                     onChange={handleGeneralSpecializationChange}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}> مجال التخصص العام:</span>} />}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
                 <Autocomplete
                     options={['برمجة', 'تطوير مواقع الويب', 'هندسة الشبكات', 'الدعم الفني', 'اتصالات وتقنية المعلومات']}
                     value={formData.specificSpecializationField}
                     onChange={(event, value) => setFormData({ ...formData, specificSpecializationField: value })}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}> مجال التخصص الدقيق:</span>} />}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
                 <h3 style={{ marginBottom: '20px' }}>حول التدريب:</h3>
                 <TextField
                     label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}>عنوان الفرصة التدريبية:</span>}
                     value={formData.opportunityName}
                     onChange={(event) => setFormData({ ...formData, opportunityName: event.target.value })}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
 
                 <Autocomplete
@@ -142,7 +142,7 @@ const TrainingOpportunity = () => {
                     value={formData.semester}
                     onChange={(event, value) => setFormData({ ...formData, semester: value })}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}> الفصل الدراسي:</span>} />}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
 
                 <Autocomplete
@@ -150,19 +150,19 @@ const TrainingOpportunity = () => {
                     value={formData.trainingType}
                     onChange={(event, value) => setFormData({ ...formData, trainingType: value })}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}> كيفية مزاولة التدريب:</span>} />}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
                 <h3 style={{ marginBottom: '20px' }}>تفاصيل حول الفرصة التدريبية:</h3>
                 <TextField
                     label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}> المدينة:</span>}
                     value={formData.city}
                     onChange={(event) => setFormData({ ...formData, city: event.target.value })}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
 
 
                 <h4>أيام التدريب</h4>
-                <div style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+                <div style={{ width: '50%', marginBottom: '20px' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <FormControl variant="standard" sx={{ width: '100%' }}>
@@ -203,7 +203,7 @@ const TrainingOpportunity = () => {
 
                 <h4>ساعات التدريب</h4>
 
-                <div style={{ width: '50%', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}>
+                <div style={{ width: '50%', marginBottom: '20px' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <FormControl variant="standard" sx={{ width: '100%' }}>
@@ -248,7 +248,7 @@ const TrainingOpportunity = () => {
                     value={formData.numberOfTrainees}
                     onChange={handleNumberOfTraineesChange}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}>عدد المتدربين:</span>} />}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
 
 
@@ -257,7 +257,7 @@ const TrainingOpportunity = () => {
                     value={formData.trainingBonus}
                     onChange={handleTrainingBonusChange}
                     renderInput={(params) => <TextField {...params} label={<span style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}>مكافأة التدريب:</span>} />}
-                    style={{ marginBottom: '20px', width: '50%', fontFamily: 'Tajawal, sans-serif' }}
+                    style={{ marginBottom: '20px', width: '50%' }}
                 />
 
                 <h3 style={{ marginBottom: '20px' }}>الفرصة التدريبية:</h3>
@@ -269,7 +269,7 @@ const TrainingOpportunity = () => {
                     aria-label="Description"
                     value={formData.description}
                     onChange={handleChangeDescription}
-                    style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
                 />
                 <h4 style={{ marginBottom: '20px' }}>واجبات الشاغر التدريبي</h4>
 
@@ -277,14 +277,14 @@ const TrainingOpportunity = () => {
                     aria-label="Duties"
                     value={formData.duties}
                     onChange={handleChangeDuties}
-                    style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
                 />
                 <h4 style={{ marginBottom: '20px' }}>فوائد التدريب معنا</h4>
                 <TextareaAutosize
                     aria-label="Benefits"
                     value={formData.benefits}
                     onChange={handleChangeBenefits}
-                    style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
+                    style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
                 />
 
 
@@ -298,7 +298,7 @@ const TrainingOpportunity = () => {
                 <label htmlFor="file-upload">
                     <Button
                         variant="contained"
-                        style={{ backgroundColor: 'mediumaquamarine', color: 'black', fontFamily: 'Tajawal, sans-serif', fontSize: '12px' }}
+                        style={{ backgroundColor: 'mediumaquamarine', color: 'black', fontSize: '12px' }}
                         component="span"
                     >
                         +    إضافة خطة تدريبية مفصلة             </Button>
@@ -311,14 +311,14 @@ const TrainingOpportunity = () => {
                     <Button
                         onClick={handleSave}
                         variant="contained"
-                        style={{ backgroundColor: 'mediumaquamarine', color: 'black', width: '40%', fontFamily: 'Tajawal, sans-serif', fontSize: '12px' }}
+                        style={{ backgroundColor: 'mediumaquamarine', color: 'black', width: '40%', fontSize: '12px' }}
                     >
                         حفظ
                     </Button>
                     <Button
                         onClick={handleCancel}
                         variant="contained"
-                        style={{ backgroundColor: 'lightcoral', color: 'black', width: '40%', fontFamily: 'Tajawal, sans-serif', fontSize: '12px' }}
+                        style={{ backgroundColor: 'lightcoral', color: 'black', width: '40%', fontSize: '12px' }}
                     >
                         إلغاء
                     </Button>

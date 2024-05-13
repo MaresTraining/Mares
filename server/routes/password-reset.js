@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
 // verify password reset link
 router.get("/:id/:token", async (req, res) => {
 	try {
-		const user = await User.findOne({ _id: req.params.id });
+		const user = await User.findOne({ _id: req.params._id });
 		if (!user) return res.status(400).send({ message: "Invalid link" });
 
 		const token = await Token.findOne({
@@ -73,7 +73,7 @@ router.post("/:id/:token", async (req, res) => {
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
 
-		const user = await User.findOne({ _id: req.params.id });
+		const user = await User.findOne({ _id: req.params._id });
 		if (!user) return res.status(400).send({ message: "Invalid link" });
 
 		const token = await Token.findOne({

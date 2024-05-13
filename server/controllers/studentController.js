@@ -18,7 +18,7 @@ export const signin = async (req, res) => {
          return  res.status(404).json({message:"uesr dosen't exist"});
       } 
       
-      const isPasswordCorrect = await bcrypt.compare(password, existingStudent.password);
+      const isPasswordCorrect = password=== existingStudent.password;
       
       if(!isPasswordCorrect){
          console.log("invalied Password")
@@ -26,7 +26,7 @@ export const signin = async (req, res) => {
       }
       const token = jwt.sign({email: existingStudent.email, id:existingStudent._id},secret,{expiresIn:"1h"});//app=env file
       console.log("student signed in")
-      res.status(200).json({result: existingStudent, token, message:"student signed in" });
+      res.status(200).json({result: existingStudent, token:token, message:"student signed in" });
    } catch (error) {
       console.log('ERROR')
       res.status(500).json({message:'حدث خطأ ما!'});
@@ -35,25 +35,16 @@ export const signin = async (req, res) => {
 // // Signup
 
 export const signup = async (req, res) => { 
-   const {firstname, lastname, email, password, confirmPassword} = req.body;
+const user = req.body;
    console.log(req.body) ;
     try {
-       const existingStudent = await Student.findOne({email: email});
-       console.log(existingStudent);
-       if(existingStudent)
-        return res.status(400).json({message:"الحساب موجود مسبقا!"});
-   //اذا فيه ايرور ارجع لذا    
-   function checkPassword(password, confirmPassword) {
-      if (password === confirmPassword) {return true;} else { return false;}}
-      checkPassword(password, confirmPassword);
-       if(!checkPassword)
-      //  if (password !== confirmPassword)
-        return res.status(400).json({message:"كلمة المرور غير متطابقة"});
-       
-       const hashPassword = await bcrypt.hash(password,12);
-       const result = await Student.create({firstname, lastname,email,password: hashPassword });
+       const existingStudent = await Student.findOne({email: user.email});
+       if(existingStudent){
+         console.log("error:",existingStudent);
+         return res.status(400).json({message:"الحساب موجود مسبقا!"});
+       }
+       const result = await Student.create(user);
        const token = jwt.sign({email: result.email, id:result._id},secret,{expiresIn:"1h"});//app=env file
-       
        res.status(200).json({result, token, message:"New student added"});
    
     } catch (error) {

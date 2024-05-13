@@ -1,4 +1,3 @@
-import './Student.css';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -17,111 +16,121 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 
 export default function StudentSignin() {
-  const {signIn, error, isCompany, isStudent}= useAuthContext();
-  const {goToPage}= useSystemContext();
+  const [email, setEamil] = React.useState("email@em.com");
+  const [password, setPassword] = React.useState("123456");
+
+  const { signIn, isCompany, isStudent } = useAuthContext();
+  const { goToPage } = useSystemContext();
   React.useEffect(() => {
-    if(isCompany){
+    if (isCompany) {
       goToPage("company-home");
     }
-    else if(isStudent){
+    else if (isStudent) {
       goToPage("student-home");
     }
   }, [goToPage, isCompany, isStudent]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-      const cred = new FormData(event.currentTarget);
-      signIn({
-        role: "student",
-        email: cred.get('email'),
-      password: cred.get('password'),});
+    signIn({
+      role: "student",
+      email: email,
+      password: password,
+    });
   };
 
-  
+
   return (
     <>
-     <Header/>
-    <div style={{backgroundColor:'#efefef'}}  >
-   
-   
-<Container component="main" maxWidth="xs">
+      <Header />
+      <Box sx={{ backgroundColor: '#efefef !imprtant' }}  >
 
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            fontFamily: 'Tajawal, sans-serif', 
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'mediumaquamarine;' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-           <span>تسجيل الدخول</span> 
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-             
-             
-              <Grid item xs={12}>
-                <TextField
-                              required
-                              fullWidth
-                              id="email"
-                              label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>الإيميل الإلكتروني </span>}
-                              name="email"
-                              autoComplete="email"
-                              type="email"
-             
-           
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>كلمة المرور </span>}
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-       
-            
-            </Grid>
-            <Button
-        
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              style={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
-            >
-            <span> تسجيل الدخول</span> 
-            </Button  >
-            <Grid container justifyContent="flex-end"  >
-              <Grid item >
-              <span >ليس لديك حساب في مارس؟ <a href="/StudentSignup">إنشاء حساب</a></span>  
-              <br></br>              
-              <span>نسيت كلمة المرور؟ <a href="/ResetPassword"> إعادة تعيين </a></span>
 
-             </Grid>
-            </Grid>
+        <Container component="main" maxWidth="xs">
+
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'mediumaquamarine;' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              <span>تسجيل الدخول</span>
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="البريد الإلكتروني"
+                    name="email"
+                    autoComplete="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                    setEamil(e.currentTarget.value);
+                  }}
+
+
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="كلمة المرور"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={(e) => {
+                    setPassword(e.currentTarget.value);
+                  }}
+
+
+                  />
+                </Grid>
+
+
+              </Grid>
+              <Button
+
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                style={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
+              >
+                <span> تسجيل الدخول</span>
+              </Button>
+              <Grid container justifyContent="flex-end"  >
+                <Grid item >
+                  <span >ليس لديك حساب في مارس؟ <a href="/student-sign-up">إنشاء حساب</a></span>
+                  <br></br>
+                  <span>نسيت كلمة المرور؟ <a href="/reset-password"> إعادة تعيين </a></span>
+
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
-        <br></br>
-        <br></br>
-        <br></br>
-     
-      </Container>
+          <br></br>
+          <br></br>
+          <br></br>
 
-    </div>
+        </Container>
+
+      </Box>
     </>
- 
-   
+
+
   );
 }

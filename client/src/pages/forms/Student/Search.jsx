@@ -16,7 +16,7 @@ const SearchField = () => {
                     </InputAdornment>
                 )
             }}
-            style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginTop: '55px',marginRight:'400px', borderColor: '#66cdaa', borderWidth: '20px' }}
+            style={{ width: '50%', minHeight: '100px', marginTop: '55px',marginRight:'400px', borderColor: '#66cdaa', borderWidth: '20px' }}
         />
     );
 };

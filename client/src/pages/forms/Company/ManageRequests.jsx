@@ -26,7 +26,7 @@ const OpportunityList = ({ onOpportunitySelect }) => {
                 style={{width: '50%', minHeight: '30px', fontFamily: 'Tajawal'}}
                 onChange={(e) => onOpportunitySelect(opportunities[e.target.value])}>
                     {opportunities.map((opportunity, index) => (
-                        <option key={opportunity.id} value={index}>{opportunity.name}</option>
+                        <option key={opportunity._id} value={index}>{opportunity.name}</option>
                     ))}
                 </select>
             </div>

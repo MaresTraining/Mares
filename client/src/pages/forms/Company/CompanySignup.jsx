@@ -16,8 +16,14 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 
 export default function CompanySignup() {
+  const [name, setName] = React.useState("شركة أحمد");
+  const [commercialNum, setCommercialNum] = React.useState("1234567890");
+  const [email, setEamil] = React.useState("company@company.com");
+  const [password, setPassword] = React.useState("123456");
+  const [confirmPassword, setConfirmPassword] = React.useState("123456");
+
   const { goToPage } = useSystemContext();
-  const { signUpStudent, error, isCompany, isStudent } = useAuthContext();
+  const { signUpCompany, isCompany, isStudent } = useAuthContext();
   React.useEffect(() => {
     if (isCompany) {
       goToPage("company-home");
@@ -44,11 +50,11 @@ export default function CompanySignup() {
     try {
       const cred = new FormData(event.currentTarget);
       validateInput(cred);
-      signUpStudent({
-        companyName: cred.get('CompanyName'),
-        commercialRegistrationNumber: cred.get('CommercialRegistrationNumber'),
-        email: cred.get('email'),
-        password: cred.get('password'),
+      signUpCompany({
+        companyName:name,
+        commercialRegistrationNumber: commercialNum,
+        email: email,
+        password: password,
       })
 
 
@@ -69,7 +75,6 @@ export default function CompanySignup() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            fontFamily: 'Tajawal, sans-serif',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'mediumaquamarine;' }}>
@@ -86,57 +91,81 @@ export default function CompanySignup() {
                   name="CompanyName"
                   required
                   fullWidth
+                  value={name}
                   id="CompanyName"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>إسم الشركة</span>}
+                  label={"إسم الشركة"}
                   autoFocus
+                  onChange={(e) => {
+                    setName(e.currentTarget.value);
+                  }}
+
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
+                  value={commercialNum}
                   id="CommercialRegistrationNumber"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>رقم السجل التجاري</span>}
+                  label={"رقم السجل التجاري"}
                   name="CommercialRegistrationNumber"
                   autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>الإيميل الإلكتروني </span>}
-                  name="email"
-                  autoComplete="email"
-                  type="email"
-
+                  onChange={(e) => {
+                    setCommercialNum(e.currentTarget.value);
+                  }}
 
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>كلمة المرور </span>}
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirmpassword"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}> تأكيد كلمة المرور</span>}
-                  type="password"
-                  id="confirmpassword"
-                />
-              </Grid>
+                
+                </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="البريد الإلكتروني"
+                placeholder="البريد الإلكتروني"
+                value={email}
+                name="email"
+                type="email"
+                autoComplete='email'
+                onChange={(e) => {
+                  setEamil(e.currentTarget.value);
+                }}
 
+              />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                value={password}
+                name="password"
+                label="كلمة المرور "
+                id="password"
+                type="password"
+                autoComplete="new-password"
+                onChange={(e) => {
+                  setPassword(e.currentTarget.value);
+                }}
+
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirmpassword"
+                label="تأكيد كلمة المرور"
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.currentTarget.value);
+                }}
+              />
+            </Grid>
+            </Grid>
+            
             <Button
 
               type="submit"

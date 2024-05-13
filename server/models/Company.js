@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const companySchema = mongoose.Schema({
-  id: {type: String},
   email: {type: String,  trim: true, minlength: 5, maxlength: 100, unique: true,required: true},
   password: {type: String,  trim: true, minlength: 8, required: true},
+  role:{type: String , default:"company"},
   companyName: {type:String},
   companySector: {type:String},
   companyField: {type:String},

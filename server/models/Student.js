@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 //هنا اغيرها لستيودنت
 const studentSchema = mongoose.Schema({
-  firstname: {type: String},
-  lastname:  {type: String},
+  firstName: {type: String},
+  lastName:  {type: String},
   email: {type: String,  trim: true, minlength: 5, maxlength: 100, unique: true,required: true},
   password: {type: String,  trim: true, minlength: 8, required: true},
-  id: {type: String},
-  dateofBirth: {type:Date},
+  role:{type: String , default:"student"},
+  dateOfBirth: {type:Date},
   phoneNumber:{type:  Number},
   universityName: {type:String},
   collegeName: {type:String},//4

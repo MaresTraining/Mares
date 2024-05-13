@@ -8,259 +8,253 @@ import Button from '@mui/material/Button';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CompanyHeader from './CompanyHome/CompanyHeader/CompanyHeader';
-import CompanySidebar from './CompanyHome/CompanySidebar';
-import EventIcon from '@mui/icons-material/Event';
 import PersonIcon from '@mui/icons-material/Person';
+import { useSystemContext } from '../../../contexts/SystemContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
+import { Box } from '@mui/material';
 
 const Cinfo = () => {
+    const { handleLoading } = useSystemContext()
+    const { user, updateUser } = useAuthContext();
+    const [isLoading, setIsLoading] = React.useState(true);
     const [formData, setFormData] = React.useState({
         companyName: '',
         companyField: '',
         phone: '',
         companyAddress: '',
         city: '',
-        commercialRegistrationNumber:'',
-        companySector:'',
-        descriptionCompany:'',
-        companyImage:'',
-        facebook:'',
-        twitter:'',
-        instagram:'',
-        linkedIn:'',
+        commercialRegistrationNumber: '',
+        companySector: '',
+        descriptionCompany: '',
+        companyImage: '',
+        facebook: '',
+        twitter: '',
+        instagram: '',
+        linkedIn: '',
     });
+    React.useEffect(() => {
+        if (user && isLoading) {
+            const fd = { ...formData };
+            for (const key in fd) {
+                const val = user[key]?? "";
+                console.log(key, val)
+                fd[key] = val;
+            }
+            setFormData(fd);
+            setIsLoading(false)
+            handleLoading(false)
+        }
+    }, [formData, handleLoading, isLoading, user]);
+
+    if (isLoading) {
+        handleLoading(true);
+    }
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSave = async () => {
-        try {
-            const response = await fetch(' ', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await response.json();
-            console.log('Response from server:', data);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+    const handleSave = () => {
+        updateUser(formData, user._id, user.role);
+    }
 
     return (
-     <div>
-           <CompanyHeader/>  
-             <Grid container direction="column" justifyContent="flex-start" alignItems="center" style={{ height: '100vh' }}>
+        <div style={{maxWidth:"100vw !imaportant"}}>
+            <CompanyHeader />
+            <Box maxWidth={1} height={"100vh"} sx={{ overflowY: "auto" }} flexDirection={"column"} justifyContent={'center'} p={2}>
 
-             <h2 style={{ fontFamily: 'Tajawal, sans-serif' }}>معلومات الشركة </h2>
+                <Grid container direction="column" justifyContent="center" alignItems="center" style={{ height: '135%', width:"90vw" }}>
 
-            <h3 style={{ fontFamily: 'Tajawal, sans-serif' }}>معلومات عامة </h3>
+                    <h2 >معلومات الشركة </h2>
 
-          
-            <TextField
-                margin="normal"
-                required
-                name="companyName"
-                label= {<span style={{ fontFamily: 'Tajawal, sans-serif'}}>اسم الشركة </span>}
-                value={formData.companyName}
-                onChange={handleChange}
-                InputProps={{
-                    startAdornment: (
-                        <PersonIcon />
-                    ),
-                }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
-            />
-            <TextField
-                margin="normal"
-                required
-                name="companyField"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}> مجال الشركة </span>}
-                value={formData.companyField}
-                onChange={handleChange}
-               
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
-            />
-         
+                    <h3 >معلومات عامة </h3>
 
-        
-            <TextField
-                margin="normal"
-                name="phone"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>رقم الهاتف  </span>}
-                value={formData.phone}
-                onChange={handleChange}
-                InputProps={{
-                    startAdornment: (
-                        <PhoneIcon />
-                    ),
-                }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif' }} 
-            />
-     
+                    <TextField
+                        margin="normal"
+                        required
+                        name="companyName"
+                        label={"اسم الشركة"}
+                        value={formData.companyName}
+                        onChange={handleChange}
+                        InputProps={{
+                            startAdornment: (
+                                <PersonIcon />
+                            ),
+                        }}
+                        style={{ width: '50%' }}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        name="companyField"
+                        label={"مجال الشركة"}
+                        value={formData.companyField}
+                        onChange={handleChange}
 
-          
-            <h3 style={{ fontFamily: 'Tajawal, sans-serif' }}>موقع الشركة </h3>
-
-            <TextField
-                margin="normal"
-                name="companyAddress"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}> عنوان الشركة </span>}
-                value={formData.companyAddress}
-                onChange={handleChange}
-                InputProps={{
-                    startAdornment: (
-                        <LocationOnIcon />
-                    ),
-                }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
-            />
-         
-
-   
-            <TextField
-                margin="normal"
-                name="city"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}> المدينة </span>}
-                value={formData.city}
-                onChange={handleChange}
-                InputProps={{
-                    startAdornment: (
-                        <LocationCityIcon />
-                    ),
-                }}
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
-            />
-         
-             
-   
-            <TextField
-                margin="normal"
-                name="commercialRegistrationNumber"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>السجل التجاري </span>}
-                value={formData.commercialRegistrationNumber}
-                onChange={handleChange}
-               
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
-            />
-        
+                        style={{ width: '50%' }}
+                    />
 
 
-          <h3 style={{ fontFamily: 'Tajawal, sans-serif' }}>حول العمل</h3> 
+
+                    <TextField
+                        margin="normal"
+                        name="phone"
+                        label={"رقم الهاتف"}
+                        value={formData.phone}
+                        onChange={handleChange}
+                        InputProps={{
+                            startAdornment: (
+                                <PhoneIcon />
+                            ),
+                        }}
+                        style={{ width: '50%' }}
+                    />
 
 
-          <TextField
-                margin="normal"
-                name="companySector"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>قطاع الشركة</span>}
-                value={formData.companySector}
-                onChange={handleChange}
-               
-                style={{ width: '50%', fontFamily: 'Tajawal, sans-serif '   }} 
-            /> 
 
-            <h4>عن الشركة </h4>
-                <TextareaAutosize
-                    aria-label="self-description"
-                    placeholder="اكتب وصفًا عن الشركة..."
-                    name="descriptionCompany"
-                    value={formData.descriptionCompany}
-                    onChange={handleChange}
-                    style={{ width: '50%', minHeight: '100px', fontFamily: 'Tajawal, sans-serif', marginBottom: '20px' }}
-                />
-          
+                    <h3 >موقع الشركة </h3>
 
-            
-                <h4>صور من بيئة العمل</h4>
+                    <TextField
+                        margin="normal"
+                        name="companyAddress"
+                        label={"عنوان الشركة"}
+                        value={formData.companyAddress}
+                        onChange={handleChange}
+                        InputProps={{
+                            startAdornment: (
+                                <LocationOnIcon />
+                            ),
+                        }}
+                        style={{ width: '50%', }}
+                    />
+
+
+
+                    <TextField
+                        margin="normal"
+                        name="city"
+                        label={"المدينة"}
+                        value={formData.city}
+                        onChange={handleChange}
+                        InputProps={{
+                            startAdornment: (
+                                <LocationCityIcon />
+                            ),
+                        }}
+                        style={{ width: '50%', }}
+                    />
+
+
+
+                    <TextField
+                        margin="normal"
+                        name="commercialRegistrationNumber"
+                        label={"السجل التجاري"}
+                        value={formData.commercialRegistrationNumber}
+                        onChange={handleChange}
+
+                        style={{ width: '50%', }}
+                    />
+                    <h3 >حول العمل</h3>
+                    <TextField
+                        margin="normal"
+                        name="companySector"
+                        label={"قطاع الشركة"}
+                        value={formData.companySector}
+                        onChange={handleChange}
+
+                        style={{ width: '50%', }}
+                    />
+
+                    <h4>عن الشركة </h4>
+                    <TextareaAutosize
+                        aria-label="self-description"
+                        placeholder="اكتب وصفًا عن الشركة..."
+                        name="descriptionCompany"
+                        value={formData.descriptionCompany}
+                        onChange={handleChange}
+                        style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
+                    />
+
+
+
+                    <h4>صور من بيئة العمل</h4>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        startIcon={<CloudUploadIcon />}
+                        style={{ fontFamily: 'Tajawal, sans-serif', marginBottom: '20px', backgroundColor: 'mediumaquamarine' }}
+                    >
+                        <input
+                            type="file"
+                            hidden
+                            name="companyImage"
+                            onChange={handleChange}
+                        />
+                    </Button>
+                    <h3 >وسائل التواصل الإجتماعي</h3>
+
+                    <TextField
+                        margin="normal"
+                        name="facebook"
+                        label={"فيسبوك"}
+                        value={formData.facebook}
+                        onChange={handleChange}
+
+                        style={{ width: '30%', }}
+                    />
+
+
+                    <TextField
+                        margin="normal"
+                        name="twitter"
+                        label={"تويتر"}
+                        value={formData.twitter}
+                        onChange={handleChange}
+
+                        style={{ width: '30%', }}
+                    />
+
+
+                    <TextField
+                        margin="normal"
+                        name="instagram"
+                        label={"انستقرام"}
+                        value={formData.instagram}
+                        onChange={handleChange}
+
+                        style={{ width: '30%', }}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        name="linkedIn"
+                        label={"لينكد ان"}
+                        value={formData.linkedIn}
+                        onChange={handleChange}
+                        style={{ width: '30%', }}
+                    />
+
+                </Grid>
+                <div style={{ textAlign: "center"}}>
+
                 <Button
-                 variant="contained"
-                 component="label"
-                 startIcon={<CloudUploadIcon />}
-                 style={{ fontFamily: 'Tajawal, sans-serif', marginBottom: '20px', backgroundColor: 'mediumaquamarine' }}
-                 >
-               <input
-                 type="file"
-                 hidden
-                 name="companyImage"
-                 onChange={handleChange}
-               />
+
+                    onClick={handleSave}
+                    type="submit"
+                    sx={{ mt: 3, mb: 2 }}
+                    style={{ backgroundColor: 'mediumaquamarine', color: 'black', width: '50%' }}
+                >
+                    <span> حفظ</span>
+
                 </Button>
-              
+                </div>
 
-           
+            </Box>
 
-
-                <h3 style={{ fontFamily: 'Tajawal, sans-serif' }}>وسائل التواصل الإجتماعي</h3> 
-
-                <TextField
-                margin="normal"
-                name="facebook"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>فيسبوك</span>}
-                value={formData.facebook}
-                onChange={handleChange}
-               
-                style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
-                />
-           
-       
-                <TextField
-                margin="normal"
-                name="twitter"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>تويتر</span>}
-                value={formData.twitter}
-                onChange={handleChange}
-               
-                style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
-                />
-       
-             
-                <TextField
-                margin="normal"
-                name="instagram"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>انستقرام</span>}
-                value={formData.instagram}
-                onChange={handleChange}
-               
-                style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
-                />
-                
-
-                <TextField
-                margin="normal"
-                name="linkedIn"
-                label={<span style={{ fontFamily: 'Tajawal, sans-serif'}}>لينكد ان</span>}
-                value={formData.linkedIn}
-                onChange={handleChange}
-               
-                style={{ width: '30%', fontFamily: 'Tajawal, sans-serif '   }} 
-                />
-           
-
-        
-
-
-
-
-
-
-
-
-<Button
-         onClick={handleSave}
-        type="submit"
-      
-        sx={{ mt: 3, mb: 2 }}
-        style={{ backgroundColor: 'mediumaquamarine', color: 'black' , width: '50%', fontFamily: 'Tajawal, sans-serif'}}
-      >
-      <span> حفظ</span> 
-  
-      </Button  >
-              </Grid>
-      
-     </div>
+        </div>
     );
 };
 

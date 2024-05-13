@@ -11,7 +11,7 @@ const auth = async (req, res,next) =>{
         
         if(token && isCustomAuth) {
         decodedData = jwt.verify(token, secret );
-        req.userId = decodedData?.id;//ارجع له لو فيه ايرور
+        req.userId = decodedData?._id;//ارجع له لو فيه ايرور
         } else {
         decodedData = jwt.decode(token);
         req.userId = decodedData?.sub;//ارجع له لو فيه ايرور

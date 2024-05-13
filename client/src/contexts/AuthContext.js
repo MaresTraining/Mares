@@ -6,12 +6,11 @@ import { useSystemContext } from "./SystemContext";
 
 const Context = createContext();
 export default function AuthContextProvider(props) {
-  const { goToPage, showToast, setLoading, setSession, getSession, resetSession } = useSystemContext();
+  const { goToPage, showToast, handleError, setLoading, setSession, getSession, resetSession } = useSystemContext();
   const [hasLogin, setHasLogin] = useState(false);
   const [isStudent, setIsStudent] = useState();
   const [isCompany, setIsCompany] = useState();
   const [user, setUser] = useState();
-  const [error, setError] = useState();
 
   const handleUser = useCallback((user) => {
     if (user) {
@@ -29,74 +28,103 @@ export default function AuthContextProvider(props) {
     handleUser(getSession("user"));
   }, [getSession, handleUser]);
 
-  const signUpStudent = async ({firstName, lastName, email, password}) => {
+  const signUpStudent = async (user) => {
     try {
       setLoading(true);
-      const hash = sha256(password);
-      const ob = { firstName: firstName, lastName: lastName, email: email, password: hash, role: "student" };
-      const response = await axios.post(`${API}/student/sign-up`, ob);
+      user.password = sha256(user.password);
+      user.role = "student";
+      const response = await axios.post(`${API}/student/sign-up`, user);
       setLoading(false);
       const status = response.status;
       if (status === 200) {
-        ob._id = response.data;
-        ob.password = "";
-        handleUser(ob)
+        const token = response.data.token
+        console.log("Token:", token)
+        user = response.data.result
+        handleUser(user)
         showToast("success", "Sign up success!")
       }
       else {
         const message = response.message;
-        setError(message)
+        handleError(message)
+        console.log(message)
+
       }
     } catch (error) {
       setLoading(false);
-      setError(error)
+      handleError(error)
+      console.log(error)
+
     }
   }
 
-  const signUpCompany = async ({name, commercialRegistrationNumber, email, password}) => {
+  const signUpCompany = async (user) => {
     try {
       setLoading(true);
-      const hash = sha256(password);
-      const ob = { name: name, commercialRegistrationNumber: commercialRegistrationNumber, email: email, password: hash, role: "company" };
-      const response = await axios.post(`${API}/company/sign-up`, ob);
+      user.password = sha256(user.password);
+      user.role = "company"
+      const response = await axios.post(`${API}/company/sign-up`, user);
       setLoading(false);
       const status = response.status;
       if (status === 200) {
-        ob._id = response.data;
-        ob.password = "";
-        handleUser(ob)
+        user = response.data.result;
+        user.password = "";
+        handleUser(user)
         showToast("success", "Sign up success!")
       }
       else {
         const message = response.message;
-        setError(message)
+        handleError(message)
       }
     } catch (error) {
       setLoading(false);
-      setError(error)
+      handleError(error)
     }
   }
 
 
-  const signIn = async ({email, password, role}) => {
+  const updateUser = async (data, _id, role) => {
     try {
       setLoading(true);
-      const hash = sha256(password);
-      const ob = { email: email, password: hash };
-      const response = await axios.post(`${API}/${role}/sign-in`, ob);
+      const dataToUpdate = Object.fromEntries(
+        Object.keys(data)
+          .filter(key => key !== 'password' && key !== "email")
+          .map(key => [key, data[key]])
+      );
+      const response = await axios.patch(`${API}/${role}/update/${_id}`, dataToUpdate);
       setLoading(false);
       const status = response.status;
       if (status === 200) {
-        handleUser(response.data)
+        handleUser(data)
+        showToast("success", "Updating success!")
+      }
+      else {
+        const message = response.message;
+        handleError(message)
+      }
+    } catch (error) {
+      setLoading(false);
+      handleError(error)
+    }
+  }
+
+  const signIn = async ({ email, password, role }) => {
+    try {
+      setLoading(true);
+      const hash = sha256(password);
+      const response = await axios.post(`${API}/${role}/sign-in`, { email: email, password: hash });
+      setLoading(false);
+      const status = response.status;
+      if (status === 200) {
+        handleUser(response.data.result)
         showToast("success", "Sign in success!")
       }
       else {
         const message = response.message;
-        setError(message)
+        handleError(message)
       }
     } catch (error) {
       setLoading(false);
-      setError(error)
+      handleError(error)
     }
   }
 
@@ -105,7 +133,7 @@ export default function AuthContextProvider(props) {
     resetSession();
   }
 
-  const resetPassword = async ({secretQuestion, secretAnswer}) => {
+  const resetPassword = async ({ secretQuestion, secretAnswer }) => {
     try {
       setLoading(true);
       const hash = sha256(secretAnswer);
@@ -119,15 +147,15 @@ export default function AuthContextProvider(props) {
       }
       else {
         const message = response.message;
-        setError(message)
+        handleError(message)
       }
     } catch (error) {
-      setError(error)
+      handleError(error)
     }
 
   }
 
-  const setSecret = async ({secretQuestion, secretAnswer}) => {
+  const setSecret = async ({ secretQuestion, secretAnswer }) => {
     try {
       setLoading(true);
       const hash = sha256(secretAnswer);
@@ -141,11 +169,11 @@ export default function AuthContextProvider(props) {
       }
       else {
         const message = response.message;
-        setError(message)
+        handleError(message)
       }
     } catch (error) {
       setLoading(false);
-      setError(error)
+      handleError(error)
     }
 
   }
@@ -159,10 +187,10 @@ export default function AuthContextProvider(props) {
     signOut,
     resetPassword,
     setSecret,
-    error,
     hasLogin,
     isCompany,
     isStudent,
+    updateUser,
   };
 
   return (

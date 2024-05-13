@@ -2,9 +2,6 @@
 import CompanyHeader from './CompanyHome/CompanyHeader/CompanyHeader';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
- 
-
-
 function OpportunityCard({ OpportunityID, OpportunityName, TrainingType, TrainingDuration, City, imageURL, numberOfTrainees }) {
     const currentDate = new Date();
     let status; // الحالة الافتراضية

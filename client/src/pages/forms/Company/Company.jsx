@@ -27,17 +27,13 @@ const Company = () => {
           variant="outlined"
           style={{ width: '150px', color: 'black', borderColor: 'black', display: 'inline-flex', justifyContent: 'center' }}
         />
-        
-         
         ) : (
           <Chip
             icon={<FaceIcon />}
             label="تسجيل الدخول"
             variant="outlined"
             color="primary"
-          style={{ width: '150px', color: 'black', borderColor: 'black', display: 'inline-flex', justifyContent: 'center' }}
-
-            
+          style={{ width: '150px', color: 'black', borderColor: 'black', display: 'inline-flex', justifyContent: 'center' }}            
           />
         )}
         <br />

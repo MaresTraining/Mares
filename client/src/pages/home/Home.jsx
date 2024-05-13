@@ -5,18 +5,17 @@ import Boxes from './Boxes/Boxes';
 import Header from '../../components/header/header';
 
 const Home = () => {
-  // <header/>
-    return (  
-<div>
-  <Header/>
-<HeroSection/> 
-<Maresdi/>
-<Boxes />
+  return (
+    <div>
+      <Header />
+      <HeroSection />
+      <Maresdi />
+      <Boxes />
 
-</div>
+    </div>
 
-   );
-    
+  );
+
 }
- 
+
 export default Home;

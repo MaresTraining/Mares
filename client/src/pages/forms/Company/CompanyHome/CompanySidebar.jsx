@@ -26,22 +26,23 @@ import { useAuthContext } from '../../../../contexts/AuthContext';
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
-  const {signOut}= useAuthContext()
+  const {signOut, isCompany, user}= useAuthContext()
+
   const { window } = props;
   const Navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
   const ClickHandler = () =>{
-    Navigate('../Cinfo')
+    Navigate('/cinfo')
   }
 
   const ClickHandleManageRequests = () =>{
-    Navigate('/ManageRequests')
+    Navigate('/manage-requests')
   }
 
   
   const ClickHandleViewCompanyProfile = () =>{
-    Navigate('../ViewCompanyProfile')
+    Navigate('/view-company-profile')
   }
 
   const handleDrawerToggle = () => {
@@ -52,7 +53,7 @@ function ResponsiveDrawer(props) {
     <div>
       <Divider />
       <List sx={{ textAlign: 'center' }}>
-        <Typography textAlign='center' variant="h6" noWrap sx={{ mt: 2, fontFamily: 'Tajawal, sans-serif' }}>
+        <Typography textAlign='center' variant="h6" noWrap sx={{ mt: 2 }}>
            ملف الشركة
         </Typography>
 

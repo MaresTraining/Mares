@@ -1,10 +1,7 @@
-import './Student.css';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,10 +12,14 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 import { useSystemContext } from '../../../contexts/SystemContext';
 
 
-
 export default function StudentSignup() {
-  const { goToPage } = useSystemContext();
-  const { signUpStudent, error, isCompany, isStudent } = useAuthContext();
+  const { goToPage, handleError } = useSystemContext();
+  const [firstName, setFirstName] = React.useState("أحمد");
+  const [lastName, setLastName] = React.useState("أحمد");
+  const [email, setEamil] = React.useState("email@em.com");
+  const [password, setPassword] = React.useState("123456");
+  const [confirmPassword, setConfirmPassword] = React.useState("123456");
+  const { signUpStudent, isCompany, isStudent } = useAuthContext();
   React.useEffect(() => {
     if (isCompany) {
       goToPage("company-home");
@@ -29,22 +30,27 @@ export default function StudentSignup() {
   }, [goToPage, isCompany, isStudent]);
 
 
-  function validateInput(cred) {
-
+  function validateInput() {
+    return password === confirmPassword;
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const cred = new FormData(event.currentTarget);
-      validateInput(cred);
-      signUpStudent({
-        firstname: cred.get('firstname'),
-        lastname: cred.get('lastname'),
-        email: cred.get('email'),
-        password: cred.get('password'),
-      })
-
+      if (validateInput()) {
+        signUpStudent({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password
+        })
+          .then((result) => {
+            console.log(result)
+          })
+      }
+      else {
+        handleError("كلمات المرور غير متطابقة!");
+      }
 
     } catch (error) {
       console.error('Error during fetch:', error);
@@ -55,15 +61,13 @@ export default function StudentSignup() {
   return (
     <div>
       <Header />
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+      <Container style={{ backgroundColor: "white !important" }} component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            fontFamily: 'Tajawal, sans-serif',
+            py: 2,
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'mediumaquamarine;' }}>
@@ -78,44 +82,65 @@ export default function StudentSignup() {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
+                  value={firstName}
                   required
                   fullWidth
                   id="firstName"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>الإسم الأول</span>}
+                  label="الإسم الأول"
                   autoFocus
+                  onChange={(e) => {
+                    setFirstName(e.currentTarget.value);
+                  }}
+
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
+                  value={lastName}
                   id="lastName"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>الإسم الأخير</span>}
+                  label="الإسم الأخير"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={(e) => {
+                    setLastName(e.currentTarget.value);
+                  }}
+
                 />
               </Grid>
               <Grid item xs={12}>
-              
+
                 <TextField
                   required
                   fullWidth
-                  value="email@em.com"
                   id="email"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>الإيميل الإلكتروني </span>}
+                  label="البريد الإلكتروني"
+                  placeholder="البريد الإلكتروني"
+                  value={email}
                   name="email"
-                  autoComplete="email"
-                  type="email" />
+                  type="email"
+                  autoComplete='email'
+                  onChange={(e) => {
+                    setEamil(e.currentTarget.value);
+                  }}
+
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  value={password}
                   name="password"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}>كلمة المرور </span>}
+                  label="كلمة المرور "
                   id="password"
                   type="password"
                   autoComplete="new-password"
+                  onChange={(e) => {
+                    setPassword(e.currentTarget.value);
+                  }}
+
                 />
               </Grid>
               <Grid item xs={12}>
@@ -123,15 +148,18 @@ export default function StudentSignup() {
                   required
                   fullWidth
                   name="confirmpassword"
-                  label={<span style={{ fontFamily: 'Tajawal, sans-serif' }}> تأكيد كلمة المرور</span>}
+                  label="تأكيد كلمة المرور"
                   type="password"
-                  id="confirmpassword"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.currentTarget.value);
+                  }}
                 />
               </Grid>
 
             </Grid>
             <Button
-
               type="submit"
               fullWidth
               variant="contained"
@@ -151,9 +179,6 @@ export default function StudentSignup() {
         </Box>
 
       </Container>
-      <br></br>
-      <br></br>
-      <br></br>
 
     </div>
 
