@@ -40,7 +40,7 @@ export default function CompanyContextProvider(props) {
       }
     } catch (error) {
       setLoading(false);
-      handleError(error)
+      handleError(error.message)
       console.log(error)
 
     }

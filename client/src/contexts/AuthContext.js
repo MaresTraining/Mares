@@ -10,7 +10,7 @@ export default function AuthContextProvider(props) {
   const [hasLogin, setHasLogin] = useState(false);
   const [isStudent, setIsStudent] = useState();
   const [isCompany, setIsCompany] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(getSession("user")?? null);
 
   const handleUser = useCallback((user) => {
     if (user) {
@@ -35,6 +35,7 @@ export default function AuthContextProvider(props) {
       user.role = "student";
       const response = await axios.post(`${API}/student/sign-up`, user);
       setLoading(false);
+      console.log(response)
       const status = response.status;
       if (status === 200) {
         const token = response.data.token
@@ -51,8 +52,8 @@ export default function AuthContextProvider(props) {
       }
     } catch (error) {
       setLoading(false);
-      handleError(error)
-      console.log(error)
+      console.log(error.message)
+      handleError(error.message)
 
     }
   }
@@ -77,7 +78,7 @@ export default function AuthContextProvider(props) {
       }
     } catch (error) {
       setLoading(false);
-      handleError(error)
+      handleError(error.message)
     }
   }
 
@@ -103,7 +104,7 @@ export default function AuthContextProvider(props) {
       }
     } catch (error) {
       setLoading(false);
-      handleError(error)
+      handleError(error.message)
     }
   }
 
@@ -124,13 +125,14 @@ export default function AuthContextProvider(props) {
       }
     } catch (error) {
       setLoading(false);
-      handleError(error)
+      handleError(error.message)
     }
   }
 
   const signOut = () => {
     handleUser(null);
     resetSession();
+    goToPage("/");
   }
 
   const resetPassword = async ({ secretQuestion, secretAnswer }) => {
@@ -150,7 +152,7 @@ export default function AuthContextProvider(props) {
         handleError(message)
       }
     } catch (error) {
-      handleError(error)
+      handleError(error.message)
     }
 
   }
@@ -173,7 +175,7 @@ export default function AuthContextProvider(props) {
       }
     } catch (error) {
       setLoading(false);
-      handleError(error)
+      handleError(error.message)
     }
 
   }

@@ -6,15 +6,37 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EventIcon from '@mui/icons-material/Event';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Button from '@mui/material/Button';
+import { useSystemContext } from '../../../../contexts/SystemContext';
+import { useAuthContext } from '../../../../contexts/AuthContext';
 
 const Test = () => {
+    const { handleLoading } = useSystemContext()
+    const { user, updateUser } = useAuthContext();
+    const [isLoading, setIsLoading] = React.useState(true);
     const [formData, setFormData] = React.useState({
         firstName: '',
         lastName: '',
-        phone: '',
-        dob: '',
+        phoneNumber: '',
+        dateOfBirth: '',
         city: ''
     });
+    React.useEffect(() => {
+        if (user && isLoading) {
+            const fd = { ...formData };
+            for (const key in fd) {
+                const val = user[key]?? "";
+                console.log(key, val)
+                fd[key] = val;
+            }
+            setFormData(fd);
+            setIsLoading(false)
+            handleLoading(false)
+        }
+    }, [formData, handleLoading, isLoading, user]);
+
+    if (isLoading) {
+        handleLoading(true);
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -22,19 +44,7 @@ const Test = () => {
     };
 
     const handleSave = async () => {
-        try {
-            const response = await fetch(' ', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await response.json();
-            console.log('Response from server:', data);
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        updateUser(formData, user._id, "student")
     };
 
     return (
@@ -71,9 +81,9 @@ const Test = () => {
             />
             <TextField
                 margin="normal"
-                name="phone"
+                name="phoneNumber"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif',fontWeight: 'bold'}}>رقم الهاتف  </span>}
-                value={formData.phone}
+                value={formData.phoneNumber}
                 onChange={handleChange}
                 InputProps={{
                     startAdornment: (
@@ -84,10 +94,10 @@ const Test = () => {
             />
             <TextField
                 margin="normal"
-                name="dob"
+                name="dateOfBirth"
                 label={<span style={{ fontFamily: 'Tajawal, sans-serif',fontWeight: 'bold'}}>تاريخ الميلاد  </span>}
                 type="date"
-                value={formData.dob}
+                value={formData.dateOfBirth}
                 onChange={handleChange}
                 InputProps={{
                     startAdornment: (

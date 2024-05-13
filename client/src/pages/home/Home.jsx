@@ -11,7 +11,6 @@ const Home = () => {
       <HeroSection />
       <Maresdi />
       <Boxes />
-
     </div>
 
   );

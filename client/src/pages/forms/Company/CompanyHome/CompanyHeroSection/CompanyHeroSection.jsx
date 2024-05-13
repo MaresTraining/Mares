@@ -11,7 +11,7 @@ const CompanyHeroSection = () => {
               <h3 className="company-title">
                   انضم إلى <span style={{ color: 'mediumaquamarine' }}>مارِس</span> واكتشف معنى جديدًا للتنمية والابتكار في شركتك.
               </h3>
-              <h2 class="Secound-company-title">            انضم إلى رحلة تحول الطلاب وتطويرهم، واستعد للنجاح الذي ينتظرك.
+              <h2 className="Secound-company-title">            انضم إلى رحلة تحول الطلاب وتطويرهم، واستعد للنجاح الذي ينتظرك.
               </h2>
 
           

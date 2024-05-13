@@ -4,10 +4,12 @@ import { Box, Typography, Card, CardContent } from '@mui/material';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useSystemContext } from '../../../contexts/SystemContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 
 function viewCard(student) {
-const   { firstName,  lastName,  discription, experiences, skills, image }= student;
+  const { firstName, lastName, discription, experiences, skills, image } = student;
   return (
 
     <Card style={{ fontFamily: 'Tajawal, sans-serif', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -71,14 +73,21 @@ const   { firstName,  lastName,  discription, experiences, skills, image }= stud
 }
 
 export default function ViewStudentProfile() {
+  const { handleLoading } = useSystemContext()
+  const { user } = useAuthContext();
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const view = [
-    {
-      FirstName: 'منار', LastName: 'الخطابي', image: '',
-
-      Discription: '..................................', Experiences: '..............................', Skills: '..........'
+  React.useEffect(() => {
+    if (user && isLoading) {
+      setIsLoading(false)
+      handleLoading(false)
     }
-  ]
+  }, [handleLoading, isLoading, user]);
+
+  if (isLoading) {
+    handleLoading(true);
+  }
+
 
   return (
     <div>
@@ -95,10 +104,8 @@ export default function ViewStudentProfile() {
         <Typography variant="h6" gutterBottom >
           <strong>الملف الشخصي</strong>
         </Typography>
-        {view.map((v) => {
 
-          return viewCard(v)
-        })}
+        {viewCard(user)}
       </Box>
 
     </div>

@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv';
 // import postRoutes from './routes/posts.js';
 import studentRoutes from './routes/student.js';
 import companyRoutes from './routes/company.js';
+import opportunityRoutes from './routes/opportunity.js';
 
 
 dotenv.config();
@@ -17,9 +18,9 @@ app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
-// app.use('/posts', postRoutes);
 app.use('/student', studentRoutes);
 app.use('/company', companyRoutes);
+app.use('/opportunity', opportunityRoutes);
 
 
 const CONNECTION_URL = process.env.DB_URL ||'mongodb://localhost:27017/' ;

@@ -7,8 +7,15 @@ import CompanySidebar from "./CompanyHome/CompanySidebar";
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { useOpportunityContext } from '../../../contexts/OpportunityContext';
 
 const TrainingOpportunity = () => {
+    const { saveOpportunity } = useOpportunityContext()
+    const [workingFrom, setWorkingFrom] = useState("8:00")
+    const [workingTo, setWorkingTo] = useState("16:00")
+    const [fromDay, setFromDay] = useState('الأحد')
+    const [toDay, setToDay] = useState("الخميس")
+
     const [formData, setFormData] = useState({
         generalSpecializationField: 'تقنية', // قيمة افتراضية للتخصص العام
         specificSpecializationField: '',
@@ -21,6 +28,16 @@ const TrainingOpportunity = () => {
         description: '',
         duties: '',
         benefits: '',
+        trainingHours: "",
+        name: "",
+        customizedTrainingPlans: "",
+        trainingDuration: "",
+        startDates: "",
+        endDates: "",
+        workingDays: "",
+        workingHours: "",
+        trainingPlan: "",
+
 
 
         // المتغيرات الأخرى هنا
@@ -31,47 +48,75 @@ const TrainingOpportunity = () => {
     };
 
     const handleSave = () => {
-        // Handle saving training opportunity data
+        saveOpportunity(formData);
     };
 
     const handleCancel = () => {
-        // Handle cancelling and resetting form data
     };
 
 
-
+    function getDaysBetween(startDay, endDay) {
+        let startIndex = daysOfWeek.indexOf(startDay);
+        let endIndex = daysOfWeek.indexOf(endDay);
+        if (startIndex >= endIndex) {
+            const temp = startIndex;
+            startIndex = endIndex;
+            endIndex = temp;
+        }
+        const daysInBetween = daysOfWeek.slice(startIndex + 1, endIndex);
+        return daysInBetween.join(', ');
+    }
 
     const handleFromChange = (event) => {
-        // Handle change for "From" day
+        const value = event.target.value
+        setFromDay(value)
+        formData.workingDays = getDaysBetween(value, toDay)
     };
 
     const handleToChange = (event) => {
-        // Handle change for "To" day
+        const value = event.target.value
+        setToDay(value)
+        formData.workingDays = getDaysBetween(fromDay, value)
     };
 
     const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
 
+    function calculateHoursBetween(start, end) {
+
+        var startTime = "" + start.split(":");
+        var endTime = "" + end.split(":");
+        var startMinutes = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
+        var endMinutes = parseInt(endTime[0]) * 60 + parseInt(endTime[1]);
+        var minuteDifference = endMinutes - startMinutes;
+        var hourDifference = Math.floor(minuteDifference / 60);
+        var minuteRemainder = minuteDifference % 60;
+        return hourDifference + " : " + minuteRemainder;
+    }
 
 
     const handleWorkingToChange = (event) => {
-        // Handle change for "To" working hour
+        const value = event.target.value
+        setWorkingTo(value);
+        formData.workingHours = calculateHoursBetween(workingFrom, value);
     };
 
     const handleWorkingFromChange = (event) => {
-        // Handle change for "From" working hour
+        const value = event.target.value;
+        setWorkingFrom(value);
+        formData.workingHours = calculateHoursBetween(value, workingTo);
+
     };
 
     const generateHourOptions = () => {
         let options = [];
         for (let hour = 8; hour <= 16; hour++) {
-            options.push(`${hour}:00 `)
+            options.push(hour + ":00")
             if (hour !== 16) {
-                options.push(`${hour}:30 `);
+                options.push(hour + ":30");
             }
         }
         return options;
     };
-
 
 
     const handleNumberOfTraineesChange = (event, value) => {
@@ -111,7 +156,7 @@ const TrainingOpportunity = () => {
     return (
         <div>
             <CompanyHeader />
-    
+
             <Grid container direction="column" justifyContent="center" alignItems="center">
                 <h1 style={{ marginTop: '20px' }}>إنشاء فرصة تدريبية</h1>
                 <h3 style={{ marginBottom: '20px' }}>مجال التدريب:</h3>
@@ -170,7 +215,7 @@ const TrainingOpportunity = () => {
                                 <Select
                                     labelId="from-label"
                                     id="from"
-                                    value={''} // Set the value accordingly
+                                    value={fromDay} // Set the value accordingly
                                     label="من"
                                     onChange={handleFromChange}
                                 >
@@ -187,7 +232,7 @@ const TrainingOpportunity = () => {
                                 <Select
                                     labelId="to-label"
                                     id="to"
-                                    value={''} // Set the value accordingly
+                                    value={toDay} // Set the value accordingly
                                     label="الى"
                                     onChange={handleToChange}
                                 >
@@ -211,7 +256,7 @@ const TrainingOpportunity = () => {
                                 <Select
                                     labelId="from-label"
                                     id="from"
-                                    value={''} // Set the value accordingly
+                                    value={workingFrom} // Set the value accordingly
                                     label="من"
                                     onChange={handleWorkingFromChange}
                                 >
@@ -228,7 +273,7 @@ const TrainingOpportunity = () => {
                                 <Select
                                     labelId="to-label"
                                     id="to"
-                                    value={''} // Set the value accordingly
+                                    value={workingTo} // Set the value accordingly
                                     label="الى"
                                     onChange={handleWorkingToChange}
                                 >
@@ -341,5 +386,5 @@ export default TrainingOpportunity;
 
 
 
-    
+
 

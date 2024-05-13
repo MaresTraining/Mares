@@ -4,8 +4,6 @@ import Student from '../models/Student.js';
 
 const secret = 'app';
 
-// // Signin
-
 export const signin = async (req, res) => { 
    //من الفرونت ناخذ
    const { email,password } = req.body;
@@ -53,8 +51,6 @@ const user = req.body;
     }
    };
 
-// // ResetPassword
-
    export const resetPassword = async (req, res) => {
       const { email, newPassword } = req.body;
       try {
@@ -77,20 +73,22 @@ const user = req.body;
 // // update profile
 
 export const updateProfileCV = async (req, res) => {
-   const { email, ...updateData } = req.body;
-   // console.log('req.body: ',req.body)
+   const  updateData  = req.body;
+   const  {_id } = req.params;
+   console.log('req.body: ',req.body)
+   console.log('_id: ',_id)
    Student.findOneAndUpdate(
-      { email: email }, // find student by his email
-      updateData, // student data to be updated from req.body such as Certificates, CollegeName etc...
+      _id, 
+      updateData, // user data to be updated from req.body such as Certificates, CollegeName etc...
       { new: true }, // to return the opdated object
       (err, doc) => { // CallBack function
             if (err) {
-               console.log("Something went wrong when updating data!");
+               console.log("حدث خظأ ما!");
                return res.status(400).json({message:'حدث خطأ من الخادم'});
             }if (!doc) {
-               return res.status(404).json({ message: "Student not found" });
+               return res.status(404).json({ message: "المستخدم غير موجود" });
             }
-               console.log("Student document  updated! :", doc);
+               console.log("تم تغيير البيانات بنجاح :", doc);
                res.status(200).json({message:'تم التحديث بنجاح'});
          }
    );

@@ -44,9 +44,6 @@ export default function StudentSignup() {
           email: email,
           password: password
         })
-          .then((result) => {
-            console.log(result)
-          })
       }
       else {
         handleError("كلمات المرور غير متطابقة!");

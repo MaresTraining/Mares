@@ -9,13 +9,15 @@ import App from './App';
 import { CssBaseline } from '@mui/material';
 import SystemContextProvider from './contexts/SystemContext';
 import AuthContextProvider from './contexts/AuthContext';
+import CompanyContextProvider from './contexts/CompanyContext';
+import OpportunityContextProvider from './contexts/OpportunityContext';
 export const API = "http://localhost:5000";
 
 
 
 const theme = createTheme({
   direction: 'rtl',
-    typography: {
+  typography: {
     fontFamily: 'Tajawal, sans-serif',
   },
 });
@@ -28,7 +30,11 @@ root.render(
       <BrowserRouter>
         <SystemContextProvider>
           <AuthContextProvider>
-            <App />
+            <CompanyContextProvider>
+              <OpportunityContextProvider>
+                <App />
+              </OpportunityContextProvider>
+            </CompanyContextProvider>
           </AuthContextProvider>
         </SystemContextProvider>
       </BrowserRouter>

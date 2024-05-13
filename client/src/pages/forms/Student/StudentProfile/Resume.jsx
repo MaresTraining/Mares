@@ -7,9 +7,15 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
+import { useSystemContext } from '../../../../contexts/SystemContext';
+import { useAuthContext } from '../../../../contexts/AuthContext';
 
 
 const Resume = () => {
+    const { handleLoading } = useSystemContext()
+    const { user, updateUser } = useAuthContext();
+    const [isLoading, setIsLoading] = React.useState(true);
+
     const [formData, setFormData] = useState({
         description: '',
         cv: null,
@@ -33,6 +39,26 @@ const Resume = () => {
 
     });
 
+  
+      React.useEffect(() => {
+          if (user && isLoading) {
+              const fd = { ...formData };
+              for (const key in fd) {
+                  const val = user[key]?? "";
+                  console.log(key, val)
+                  fd[key] = val;
+              }
+              setFormData(fd);
+              setIsLoading(false)
+              handleLoading(false)
+          }
+      }, [formData, handleLoading, isLoading, user]);
+  
+      if (isLoading) {
+          handleLoading(true);
+      }
+  
+  
     const [acacademicLevel, setLevels] = useState([]);
 
     useEffect(() => {

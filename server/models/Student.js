@@ -7,7 +7,8 @@ const studentSchema = mongoose.Schema({
   password: {type: String,  trim: true, minlength: 8, required: true},
   role:{type: String , default:"student"},
   dateOfBirth: {type:Date},
-  phoneNumber:{type:  Number},
+  city: {type:String},
+  phoneNumber:{type:  String},
   universityName: {type:String},
   collegeName: {type:String},//4
   major: {type:String},

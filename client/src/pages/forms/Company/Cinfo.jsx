@@ -20,7 +20,7 @@ const Cinfo = () => {
     const [formData, setFormData] = React.useState({
         companyName: '',
         companyField: '',
-        phone: '',
+        phoneNumber: '',
         companyAddress: '',
         city: '',
         commercialRegistrationNumber: '',
@@ -100,9 +100,9 @@ const Cinfo = () => {
 
                     <TextField
                         margin="normal"
-                        name="phone"
+                        name="phoneNumber"
                         label={"رقم الهاتف"}
-                        value={formData.phone}
+                        value={formData.phoneNumber}
                         onChange={handleChange}
                         InputProps={{
                             startAdornment: (

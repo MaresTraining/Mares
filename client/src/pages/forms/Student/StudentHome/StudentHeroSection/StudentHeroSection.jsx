@@ -12,7 +12,7 @@ const StudentHeroSection = () => {
          
          
           </h1>
-          <h2 class="Secound-Shome-title"> مكانك لبناء مستقبلك وتحقيق أحلامك</h2>
+          <h2 className="Secound-Shome-title"> مكانك لبناء مستقبلك وتحقيق أحلامك</h2>
 
 
 
