@@ -16,7 +16,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 
 export default function StudentSignin() {
-  const [email, setEamil] = React.useState("email@em.com");
+  const [email, setEamil] = React.useState("");
   const [password, setPassword] = React.useState("123456");
 
   const { signIn, isCompany, isStudent } = useAuthContext();

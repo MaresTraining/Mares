@@ -67,7 +67,7 @@ export default function AuthContextProvider(props) {
         user = response.data;
         user.password = "";
         handleUser(user);
-        showToast("success", "تم التسجيل بنجاح!");
+        showToast("success", "تم انشاء الحساب بنجاح!");
       } else {
         handleError(response.data.message);
       }
@@ -92,7 +92,7 @@ export default function AuthContextProvider(props) {
       const status = response.status;
       if (status === 200) {
         handleUser(data)
-        showToast("success", "Updating success!")
+        showToast("success", "تم التحديث بنجاح!")
       }
       else {
         const message = response.message;
@@ -114,7 +114,7 @@ export default function AuthContextProvider(props) {
       if (response.status === 200) {
         const user = response.data;
         handleUser(user);
-        showToast("success", "Sign in success!");
+        showToast("success", "تم تسجيل الدخول بنجاح!");
       } else {
         handleError(response.data.message);
       }

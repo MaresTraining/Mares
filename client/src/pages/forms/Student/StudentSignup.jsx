@@ -14,11 +14,11 @@ import { useSystemContext } from '../../../contexts/SystemContext';
 
 export default function StudentSignup() {
   const { goToPage, handleError } = useSystemContext();
-  const [firstName, setFirstName] = React.useState("أحمد");
-  const [lastName, setLastName] = React.useState("أحمد");
-  const [email, setEamil] = React.useState("email@em.com");
-  const [password, setPassword] = React.useState("123456");
-  const [confirmPassword, setConfirmPassword] = React.useState("123456");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEamil] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const { signUpStudent, isCompany, isStudent } = useAuthContext();
   React.useEffect(() => {
     if (isCompany) {

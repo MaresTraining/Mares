@@ -1,5 +1,5 @@
 .home-hearo-header {
-  background: url(./heroImg.jpg);
+  background: url(./Saifi1.png);
   
   background-size: cover;
   background-repeat: no-repeat;
@@ -22,12 +22,15 @@
   padding: 10px 17px;
   color: rgb(7, 7, 7);
   margin-right: 400px;
+  background-color: rgba(255, 255, 255, 0.6); /* أبيض مع شفافية 60% */
 }
 
 .Secound-Shome-title {
   font-size: 24px;
   color: rgb(0, 0, 0);
-margin-right: 500px;
+margin-right: 600px;
+background-color: rgba(102,205,170, 0.6); /* أبيض مع شفافية 60% */
+
 
 }
 

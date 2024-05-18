@@ -15,11 +15,11 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 
 export default function CompanySignup() {
-  const [name, setName] = React.useState("شركة أحمد");
-  const [commercialNum, setCommercialNum] = React.useState("1234567890");
-  const [email, setEamil] = React.useState("company@company.com");
-  const [password, setPassword] = React.useState("123456");
-  const [confirmPassword, setConfirmPassword] = React.useState("123456");
+  const [name, setName] = React.useState("");
+  const [commercialNum, setCommercialNum] = React.useState("");
+  const [email, setEamil] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
 
   const { goToPage } = useSystemContext();
   const { signUpCompany, isCompany, isStudent } = useAuthContext();
