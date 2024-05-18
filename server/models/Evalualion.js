@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+const { Schema, model, SchemaTypes } = mongoose;
 
-const evaluationsSchema = mongoose.Schema({
-  opportunityId: { type: mongoose.Types.ObjectId, ref: 'Opportunity', required: true },
-  studentId:{type: mongoose.Types.ObjectId, ref: 'Student', required: true},
+const evaluationsSchema = Schema({
+  opportunityId: { type: SchemaTypes.ObjectId, ref: 'Opportunity', required: true },
+  studentId:{type: SchemaTypes.ObjectId, ref: 'Student', required: true},
   comment: {type: String},
   numOfStars:{type: Number},
 });
 
-export default mongoose.model("Evaluation",evaluationsSchema);
+export default model("Evaluation",evaluationsSchema);

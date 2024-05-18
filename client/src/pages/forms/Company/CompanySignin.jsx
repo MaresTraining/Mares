@@ -2,7 +2,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -21,6 +20,9 @@ export default function CompanySignin() {
 
   const { signIn, error, isCompany, isStudent } = useAuthContext();
   const { goToPage } = useSystemContext();
+  const [email, setEamil] = React.useState("company@company.com");
+  const [password, setPassword] = React.useState("123456");
+
   React.useEffect(() => {
     if (isCompany) {
       goToPage("company-home");
@@ -35,26 +37,23 @@ export default function CompanySignin() {
     const cred = new FormData(event.currentTarget);
     signIn({
       role: "company",
-      email: cred.get('email'),
-      password: cred.get('password'),
+      email: email,
+      password: password,
     });
   };
-
 
   return (
     <div>
 
       <Header />
-      <Container component="main" maxWidth="xs">
-
-        <CssBaseline />
+      <Container sx={{ height: "80vh" }} component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
+            height: "100%",
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            fontFamily: 'Tajawal, sans-serif',
+            justifyContent: "center",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'mediumaquamarine;' }}>
@@ -63,57 +62,54 @@ export default function CompanySignin() {
           <Typography component="h1" variant="h5">
             <span>تسجيل الدخول</span>
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label={"البريد الإلكتروني"}
-                  name="email"
-                  autoComplete="email"
-                  type="email" />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label={"كلمة المرور"}
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-
-
-            </Grid>
+          <form noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <TextField
+              required
+              margin='normal'
+              fullWidth
+              id="email"
+              label="البريد الإلكتروني"
+              name="email"
+              autoComplete="email"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEamil(e.currentTarget.value);
+              }}
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              name="password"
+              label="كلمة المرور"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.currentTarget.value);
+              }}
+            />
             <Button
-
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               style={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
             >
-              <span> تسجيل الدخول</span>
+              تسجيل الدخول
             </Button>
-            <Grid container justifyContent="flex-end"  >
-              <Grid item >
-                <span >ليس لديك حساب في مارس؟ <a href="/CompanySignup">إنشاء حساب</a></span>
-                <br></br>
-                <span>نسيت كلمة المرور؟ <a href="/ResetPassword"> إعادة تعيين </a></span>
+          </form>
+          <Grid container justifyContent="flex-end"  >
+            <Grid item >
+              <span >ليس لديك حساب في مارس؟ <a href="/company-sign-up">إنشاء حساب</a></span>
+              <br></br>
+              <span>نسيت كلمة المرور؟ <a href="/reset-password"> إعادة تعيين </a></span>
 
-              </Grid>
             </Grid>
-          </Box>
+          </Grid>
         </Box>
-        <br></br>
-        <br></br>
-        <br></br>
       </Container>
 
     </div>

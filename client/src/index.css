@@ -21,9 +21,8 @@
 }
 
 body {
-  background-color: var(--main-color);
+  background-color: #ccc !important;
   overflow-x: hidden;
-
 }
 
 a {
@@ -70,9 +69,24 @@ html::-webkit-scrollbar-thumb {
   overflow: "unset";
   right: 1.75rem !important;  
 }
-.MuiOutlinedInput-notchedOutline {
-  transform: scaleX(1);
-  -ms-transform: scaleX(-1); 
-  -webkit-transform: scaleX(-1);
-  -moz-transform: scaleX(1);
+
+/* Chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .MuiOutlinedInput-notchedOutline  {
+    transform: scaleX(-1);
+  }
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+  .MuiOutlinedInput-notchedOutline {
+    transform: scaleX(1);
+  }
+}
+
+/* Edge */
+@supports (-ms-ime-align:auto) {
+  .MuiOutlinedInput-notchedOutline {
+    transform: scaleX(-1);
+  }
 }

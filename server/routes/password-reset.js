@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
 			.status(200)
 			.send({ message: "Password reset link sent to your email account" });
 	} catch (error) {
-		res.status(500).send({ message: "Internal Server Error" });
+		res.status(500).send({ message: "Internal خطأ في الإتصال" });
 	}
 });
 
@@ -59,7 +59,7 @@ router.get("/:id/:token", async (req, res) => {
 
 		res.status(200).send("Valid Url");
 	} catch (error) {
-		res.status(500).send({ message: "Internal Server Error" });
+		res.status(500).send({ message: "Internal خطأ في الإتصال" });
 	}
 });
 
@@ -93,7 +93,7 @@ router.post("/:id/:token", async (req, res) => {
 
 		res.status(200).send({ message: "Password reset successfully" });
 	} catch (error) {
-		res.status(500).send({ message: "Internal Server Error" });
+		res.status(500).send({ message: "Internal خطأ في الإتصال" });
 	}
 });
 

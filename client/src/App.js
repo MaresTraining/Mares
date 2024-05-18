@@ -44,8 +44,8 @@ import Toast from './components/Toast';
 import { useEffect } from 'react';
 
 function App() {
-  const { toast, error, handleError, showToast, loading } = useSystemContext();
-  
+  const { toast, error, handleError, showToast, hideToast, loading } = useSystemContext();
+
 
   useEffect(() => {
     if (error) {
@@ -68,7 +68,7 @@ function App() {
         <Route path="/company-sign-up" element={<CompanySignup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/student-home" element={<StudentHome />} />
-        <Route path="/test" element={<Test />} />
+        {/* <Route path="/test" element={<Test />} /> */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/company-home" element={<CompanyHome />} />
@@ -109,10 +109,8 @@ function App() {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Toast
-        position={1}
-        text={toast.text}
-        open={toast.open}
-        type={toast.type}
+        toast={toast}
+        hideToast={hideToast}
       />
 
     </div>

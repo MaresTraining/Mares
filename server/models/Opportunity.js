@@ -1,8 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+const { Schema, model, SchemaTypes } = mongoose;
 
-const Opportunitieschema = mongoose.Schema({
+const Opportunitieschema = Schema({
   name: {type: String},
-  companyId: {type: mongoose.Types.ObjectId, ref: 'Company', required: true}, 
+  companyId: {type: SchemaTypes.ObjectId, ref: 'Company', required: true}, 
   generalSpecializationField: {type: String},
   specificSpecializationField: {type: String},
   opportunityName: {type: String},
@@ -24,4 +25,4 @@ const Opportunitieschema = mongoose.Schema({
   benefits: {type: String},
 });
 
-export default mongoose.model("Opportunity",Opportunitieschema);
+export default model("Opportunity",Opportunitieschema);

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-//هنا اغيرها لستيودنت
-const studentSchema = mongoose.Schema({
+import mongoose from "mongoose";
+const { Schema, model, SchemaTypes } = mongoose;
+const studentSchema = Schema({
   firstName: {type: String},
   lastName:  {type: String},
   email: {type: String,  trim: true, minlength: 5, maxlength: 100, unique: true,required: true},
@@ -37,4 +37,4 @@ studentSchema.methods.saveStudent = function() {
 };
 
 
-export default mongoose.model("Student",studentSchema);
+export default model("Student",studentSchema);

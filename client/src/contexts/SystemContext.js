@@ -33,9 +33,9 @@ export default function SystemContextProvider(props) {
     window.sessionStorage.clear();
   }
 
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isDrawerOpen, setisDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [active, setActive] = useState(null);
   const [toast, setToast] = useState({ type: "info", text: "", open: false });
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -49,21 +49,19 @@ export default function SystemContextProvider(props) {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  function hideToast (){
-    setToast({ type: "info", text: "", open: false });
+  const showToast = (type, text) => {
+    setToast({ type: type, text: text, open: true});
   };
 
-  const showToast = (type, text) => {
-
-    setToast({ type: type, text: text, open: true, hideToast });
-
+  const hideToast = () => {
+    setToast({ type: "info", text: null, open: false});
   };
 
   const openDrawer = () => {
-    setisDrawerOpen(true);
+    setIsDrawerOpen(true);
   };
   const closeDrawer = () => {
-    setisDrawerOpen(false);
+    setIsDrawerOpen(false);
   };
   const handleLoading = (loading) => {
     setLoading(loading)
@@ -85,6 +83,9 @@ export default function SystemContextProvider(props) {
   }
   const handleError=(error)=>{
     setError(error);
+    if(error){
+    showToast("error", error)
+    }
   }
   const value = {
     handleError,
@@ -101,6 +102,7 @@ export default function SystemContextProvider(props) {
     openDrawer,
     toast,
     showToast,
+    hideToast,
     resetSession,
     uploadFile,
     screenWidth,

@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+const { Schema, model, SchemaTypes } = mongoose;
 
-const companySchema = mongoose.Schema({
+const companySchema = Schema({
   email: {type: String,  trim: true, minlength: 5, maxlength: 100, unique: true,required: true},
   password: {type: String,  trim: true, minlength: 8, required: true},
   role:{type: String , default:"company"},
@@ -20,4 +21,4 @@ const companySchema = mongoose.Schema({
 
 });
 
-export default mongoose.model("Company",companySchema);
+export default model("Company",companySchema);

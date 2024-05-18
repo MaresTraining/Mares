@@ -10,7 +10,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useOpportunityContext } from '../../../contexts/OpportunityContext';
 
 const TrainingOpportunity = () => {
-    const { saveOpportunity } = useOpportunityContext()
+    const { addOpportunity } = useOpportunityContext()
     const [workingFrom, setWorkingFrom] = useState("8:00")
     const [workingTo, setWorkingTo] = useState("16:00")
     const [fromDay, setFromDay] = useState('الأحد')
@@ -48,7 +48,7 @@ const TrainingOpportunity = () => {
     };
 
     const handleSave = () => {
-        saveOpportunity(formData);
+        addOpportunity(formData);
     };
 
     const handleCancel = () => {

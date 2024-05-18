@@ -58,7 +58,7 @@ export default function StudentSignup() {
   return (
     <div>
       <Header />
-      <Container style={{ backgroundColor: "white !important" }} component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs">
         <Box
           sx={{
             display: 'flex',

@@ -10,7 +10,7 @@ export default function AuthContextProvider(props) {
   const [hasLogin, setHasLogin] = useState(false);
   const [isStudent, setIsStudent] = useState();
   const [isCompany, setIsCompany] = useState();
-  const [user, setUser] = useState(getSession("user")?? null);
+  const [user, setUser] = useState(getSession("user") ?? null);
 
   const handleUser = useCallback((user) => {
     if (user) {
@@ -28,62 +28,56 @@ export default function AuthContextProvider(props) {
     handleUser(getSession("user"));
   }, [getSession, handleUser]);
 
+
   const signUpStudent = async (user) => {
+    handleError(null)
     try {
       setLoading(true);
-      user.password = sha256(user.password);
+      user.password = sha256(user.password).toString();
       user.role = "student";
       const response = await axios.post(`${API}/student/sign-up`, user);
       setLoading(false);
-      console.log(response)
-      const status = response.status;
-      if (status === 200) {
-        const token = response.data.token
-        console.log("Token:", token)
-        user = response.data.result
-        handleUser(user)
-        showToast("success", "Sign up success!")
-      }
-      else {
-        const message = response.message;
-        handleError(message)
-        console.log(message)
 
+      if (response.status === 200) {
+        user = response.data;
+        user.password = "";
+        handleUser(user);
+        showToast("success", "تم التسجيل بنجاح!");
+      } else {
+        handleError(response.data.message);
       }
     } catch (error) {
       setLoading(false);
-      console.log(error.message)
-      handleError(error.message)
-
+      const msg= error.response?.data?.message?? error.message;
+      handleError(msg);
     }
-  }
+  };
+
+
 
   const signUpCompany = async (user) => {
     try {
       setLoading(true);
-      user.password = sha256(user.password);
-      user.role = "company"
+      user.password = sha256(user.password).toString();
+      user.role = "company";
       const response = await axios.post(`${API}/company/sign-up`, user);
       setLoading(false);
-      const status = response.status;
-      if (status === 200) {
-        user = response.data.result;
+
+      if (response.status === 200) {
+        user = response.data;
         user.password = "";
-        handleUser(user)
-        showToast("success", "Sign up success!")
-      }
-      else {
-        const message = response.message;
-        handleError(message)
+        handleUser(user);
+        showToast("success", "تم التسجيل بنجاح!");
+      } else {
+        handleError(response.data.message);
       }
     } catch (error) {
       setLoading(false);
-      handleError(error.message)
+      handleError(error.response?.data?.message || error.message);
     }
-  }
+  };
 
-
-  const updateUser = async (data, _id, role) => {
+  const updateUser = async ({data, _id, role}) => {
     try {
       setLoading(true);
       const dataToUpdate = Object.fromEntries(
@@ -91,7 +85,7 @@ export default function AuthContextProvider(props) {
           .filter(key => key !== 'password' && key !== "email")
           .map(key => [key, data[key]])
       );
-      const response = await axios.patch(`${API}/${role}/update/${_id}`, dataToUpdate);
+      const response = await axios.patch(`${API}/${role}/${_id}`, dataToUpdate);
       setLoading(false);
       const status = response.status;
       if (status === 200) {
@@ -108,26 +102,26 @@ export default function AuthContextProvider(props) {
     }
   }
 
-  const signIn = async ({ email, password, role }) => {
+  const signIn = async ({email, password, role}) => {
     try {
       setLoading(true);
       const hash = sha256(password);
       const response = await axios.post(`${API}/${role}/sign-in`, { email: email, password: hash });
       setLoading(false);
-      const status = response.status;
-      if (status === 200) {
-        handleUser(response.data.result)
-        showToast("success", "Sign in success!")
-      }
-      else {
-        const message = response.message;
-        handleError(message)
+
+      if (response.status === 200) {
+        const user = response.data;
+        handleUser(user);
+        showToast("success", "Sign in success!");
+      } else {
+        handleError(response.data.message);
       }
     } catch (error) {
       setLoading(false);
-      handleError(error.message)
+      handleError(error.response?.data?.message || error.message);
     }
-  }
+  };
+
 
   const signOut = () => {
     handleUser(null);

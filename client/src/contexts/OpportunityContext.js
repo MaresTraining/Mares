@@ -1,15 +1,15 @@
 import axios from "axios";
 import { API } from "../index";
-import { sha256 } from "js-sha256";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useSystemContext } from "./SystemContext";
 import { useAuthContext } from "./AuthContext";
 
 const Context = createContext();
 export default function OpportunityContextProvider(props) {
-  const {user} = useAuthContext();
+  const { user, isCompany } = useAuthContext();
   const { goToPage, showToast, handleError, setLoading, setSession, getSession, resetSession } = useSystemContext();
-  const [opportunities, setOpportunities] = useState();
+  const [opportunities, setOpportunities] = useState(getSession("opportunities") ?? []);
+  const [loaded, setLoaded] = useState(false);
 
   const handleOpportunities = useCallback((opportunities) => {
     setSession("opportunities", opportunities);
@@ -17,50 +17,65 @@ export default function OpportunityContextProvider(props) {
   }, [setSession])
 
   const handleAddOpportunity = (opportunity) => {
-    const _opportunities =  opportunities.map((v, i)=>{
-      if(v._id=== opportunity._id){
-       return opportunity;
+    const _opportunities = opportunities.map((v, i) => {
+      if (v._id === opportunity._id) {
+        return opportunity;
       }
-      else{
+      else {
         return v;
       }
     })
     handleOpportunities(_opportunities)
   };
 
-
-  useEffect(() => {
-    handleOpportunities(getSession("opportunities"));
-  }, [getSession, handleOpportunities]);
-
-  const saveOpportunity = async (opportunity) => {
-    opportunity.companyId= user._id;
+  const loadOpportunities = useCallback(async () => {
+    const userId = user._id;
+    const role = user.role;
     try {
       setLoading(true);
-      const response = await axios.post(`${API}/opportunity`, opportunity);
+      const response = await axios.get(`${API}/opportunity/${role}/${userId}`);
       setLoading(false);
-      console.log(response)
-      const status = response.status;
-      if (status === 200) {
-        opportunity = response.data.result
-        handleAddOpportunity(opportunity)
-        showToast("success", "Sign up success!")
-      }
-      else {
-        const message = response.message;
-        handleError(message)
-        console.log(message)
+      if (response.status === 200) {
+        const _opportunities = response.data;
+        handleOpportunities(_opportunities)
+      } else {
+        // handleError(response.data.message);
+        handleOpportunities([])
 
       }
     } catch (error) {
       setLoading(false);
-      console.log(error.message)
-      handleError(error.message)
-
+     console.log(error.response?.data?.message || error.message);
     }
-  }
+  }, [handleOpportunities, setLoading, user]);
 
- 
+  useEffect(() => {
+    if (!loaded && user) {
+      setLoaded(true);
+      loadOpportunities();
+    }
+  }, [getSession, handleOpportunities, loadOpportunities, loaded, user]);
+
+
+  const saveOpportunity = async (opportunity) => {
+    opportunity.companyId = user._id;
+    try {
+      setLoading(true);
+      const response = await axios.post(`${API}/opportunity`, opportunity);
+      setLoading(false);
+      if (response.status === 200) {
+        opportunity = response.data;
+        handleAddOpportunity(opportunity)
+        showToast("success", "تمت إضافة الفرصة بنجاح!");
+        goToPage(isCompany ? "display-published" : "dispaly-opportunities")
+      } else {
+        handleError(response.data.message);
+      }
+    } catch (error) {
+      setLoading(false);
+      handleError(error.response?.data?.message || error.message);
+    }
+  };
 
   const updateOportunity = async (data, _id) => {
     try {
@@ -70,33 +85,23 @@ export default function OpportunityContextProvider(props) {
           .filter(key => key !== 'password' && key !== "email")
           .map(key => [key, data[key]])
       );
-      const response = await axios.patch(`${API}/opportunity/update/${_id}`, dataToUpdate);
+      const response = await axios.patch(`${API}/opportunity/${_id}`, dataToUpdate);
       setLoading(false);
-      const status = response.status;
-      if (status === 200) {
-        handleAddOpportunity(data)
-        showToast("success", "Updating success!")
-      }
-      else {
-        const message = response.message;
-        handleError(message)
+      if (response.status === 200) {
+        const opportunity = response.data;
+        handleAddOpportunity(opportunity)
+        showToast("success", "تم تحديث الفرصة بنجاح!");
+      } else {
+        handleError(response.data.message);
       }
     } catch (error) {
       setLoading(false);
-      handleError(error.message)
+      handleError(error.response?.data?.message || error.message);
     }
   }
 
-  const registerInOpportunity = async (opportunity_id, student_id) => {
-  }
-
-
-
-
-
   const value = {
     opportunities,
-    registerInOpportunity,
     updateOportunity,
     saveOpportunity
   };

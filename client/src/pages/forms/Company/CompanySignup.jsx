@@ -2,7 +2,6 @@ import './Company.css';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -36,8 +35,8 @@ export default function CompanySignup() {
 
   function validateInput(cred) {
     console.log({
-      companyName: cred.get('CompanyName'),
-      commercialRegistrationNumber: cred.get('CommercialRegistrationNumber'),
+      companyName: cred.get('companyName'),
+      commercialRegistrationNumber: cred.get('commercialRegistrationNumber'),
       email: cred.get('email'),
       password: cred.get('password'),
       confirmpassword: cred.get('confirmpassword'),
@@ -65,13 +64,14 @@ export default function CompanySignup() {
 
 
   return (
-    <div>
+    <Box sx={{height:"100vh"}} flexDirection={"column"}>
       <Header />
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            my:2,
+            height:1,
+            justifyContent:'center',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -88,11 +88,11 @@ export default function CompanySignup() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="CompanyName"
+                  name="companyName"
                   required
                   fullWidth
                   value={name}
-                  id="CompanyName"
+                  id="companyName"
                   label={"إسم الشركة"}
                   autoFocus
                   onChange={(e) => {
@@ -106,9 +106,9 @@ export default function CompanySignup() {
                   required
                   fullWidth
                   value={commercialNum}
-                  id="CommercialRegistrationNumber"
+                  id="commercialRegistrationNumber"
                   label={"رقم السجل التجاري"}
-                  name="CommercialRegistrationNumber"
+                  name="commercialRegistrationNumber"
                   autoComplete="family-name"
                   onChange={(e) => {
                     setCommercialNum(e.currentTarget.value);
@@ -185,12 +185,9 @@ export default function CompanySignup() {
             </Grid>
           </Box>
         </Box>
-        <br></br>
-        <br></br>
-        <br></br>
 
       </Container>
-    </div>
+    </Box>
 
 
   );

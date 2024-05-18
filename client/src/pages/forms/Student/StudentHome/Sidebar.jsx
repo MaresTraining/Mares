@@ -31,16 +31,20 @@ function PersistentDrawer(props) {
   const Navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
-  const ClickHandler = () =>{
-    Navigate('../profile')
+  const openProfile = () =>{
+    Navigate('/view-student-profile')
+  }
+
+  const openTest = () =>{
+    Navigate('/profile')
   }
 
   const ClickHandleResume = () =>{
-    Navigate('../resume')
+    Navigate('/resume')
   }
 
   const ClickHandleViewRequests= () =>{
-    Navigate('../view-requests')
+    Navigate('/view-requests')
   }
 
   const drawer = (
@@ -52,7 +56,7 @@ function PersistentDrawer(props) {
         </Typography>
 
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={openProfile}>
             <ListItemIcon>
               <VisibilityIcon />
             </ListItemIcon>
@@ -61,7 +65,7 @@ function PersistentDrawer(props) {
         </ListItem>
 
         <ListItem disablePadding >
-          <ListItemButton onClick={ClickHandler}>
+          <ListItemButton onClick={openTest}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>

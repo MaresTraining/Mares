@@ -43,9 +43,7 @@ export default function StudentSignin() {
   return (
     <>
       <Header />
-      <Box sx={{ backgroundColor: '#efefef !imprtant' }}  >
-
-
+      <Box  >
         <Container component="main" maxWidth="xs">
 
           <CssBaseline />
@@ -60,48 +58,41 @@ export default function StudentSignin() {
             <Avatar sx={{ m: 1, bgcolor: 'mediumaquamarine;' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              <span>تسجيل الدخول</span>
+            <Typography component="h1" variant="h5">تسجيل الدخول
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="البريد الإلكتروني"
-                    name="email"
-                    autoComplete="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                    setEamil(e.currentTarget.value);
-                  }}
+            <form noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <TextField
+                required
+                margin='normal'
+                fullWidth
+                id="email"
+                label="البريد الإلكتروني"
+                name="email"
+                autoComplete="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEamil(e.currentTarget.value);
+                }}
 
 
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="كلمة المرور"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                    value={password}
-                    onChange={(e) => {
-                    setPassword(e.currentTarget.value);
-                  }}
+              />
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                name="password"
+                label="كلمة المرور"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.currentTarget.value);
+                }}
 
 
-                  />
-                </Grid>
-
-
-              </Grid>
+              />
               <Button
 
                 type="submit"
@@ -112,19 +103,17 @@ export default function StudentSignin() {
               >
                 <span> تسجيل الدخول</span>
               </Button>
-              <Grid container justifyContent="flex-end"  >
-                <Grid item >
-                  <span >ليس لديك حساب في مارس؟ <a href="/student-sign-up">إنشاء حساب</a></span>
-                  <br></br>
-                  <span>نسيت كلمة المرور؟ <a href="/reset-password"> إعادة تعيين </a></span>
+            </form>
+            <Grid container justifyContent="flex-end"  >
+              <Grid item >
+                <span >ليس لديك حساب في مارس؟ <a href="/student-sign-up">إنشاء حساب</a></span>
+                <br></br>
+                <span>نسيت كلمة المرور؟ <a href="/reset-password"> إعادة تعيين </a></span>
 
-                </Grid>
               </Grid>
-            </Box>
+            </Grid>
+
           </Box>
-          <br></br>
-          <br></br>
-          <br></br>
 
         </Container>
 

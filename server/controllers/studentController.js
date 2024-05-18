@@ -1,198 +1,174 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import Student from '../models/Student.js';
 
-const secret = 'app';
-
-export const signin = async (req, res) => { 
-   //من الفرونت ناخذ
-   const { email,password } = req.body;
-   console.log(req.body);
+export const signin = async (req, res) => {
+   const { email, password } = req.body;
+   console.log("student email:", email);
    try {
-      const existingStudent = await Student.findOne({email: email});
-      console.log('existingStudent: ', existingStudent);
-      if(!existingStudent){
-         console.log("uesr dosen't exist")
-         return  res.status(404).json({message:"uesr dosen't exist"});
-      } 
-      
-      const isPasswordCorrect = password=== existingStudent.password;
-      
-      if(!isPasswordCorrect){
-         console.log("invalied Password")
-         return  res.status(400).json({message:"invalied Password"});
+      const student = await Student.findOne({ email: email });
+      if (!student) {
+         return res.status(404).json({ message: 'الحساب غير موجود' });
       }
-      const token = jwt.sign({email: existingStudent.email, id:existingStudent._id},secret,{expiresIn:"1h"});//app=env file
-      console.log("student signed in")
-      res.status(200).json({result: existingStudent, token:token, message:"student signed in" });
+      const hashedPassword = sha256(password).toString();
+      if (hashedPassword !== student.password) {
+         return res.status(400).json({ message: 'خطأ في كلمة المرور' });
+      }
+
+      res.status(200).json({ id: student._id, email: student.email, role: student.role });
    } catch (error) {
-      console.log('ERROR')
-      res.status(500).json({message:'حدث خطأ ما!'});
-   } 
+      res.status(500).json({ message: 'خطأ في الإتصال' });
+   }
 }
 // // Signup
 
-export const signup = async (req, res) => { 
-const user = req.body;
-   console.log(req.body) ;
-    try {
-       const existingStudent = await Student.findOne({email: user.email});
-       if(existingStudent){
-         console.log("error:",existingStudent);
-         return res.status(400).json({message:"الحساب موجود مسبقا!"});
-       }
-       const result = await Student.create(user);
-       const token = jwt.sign({email: result.email, id:result._id},secret,{expiresIn:"1h"});//app=env file
-       res.status(200).json({result, token, message:"New student added"});
-   
-    } catch (error) {
-       res.status(500).json({message:'حدث خطأ ما!'});
-       console.log(error);
-    }
-   };
+export const signup = async (req, res) => {
+   const student = req.body;
+   console.log("student", student);
+   try {
+      const result = await Student.create(student);
+      res.status(200).json(result);
+   } catch (error) {
+      if (error.name === 'ValidationError') {
+         console.log(error.message)
+         res.status(400).json({ message: error.message });
+      } else if (error.code && error.code === 11000) {
+         res.status(400).json({ message: 'الحساب مسجل مسبقا' });
+      } else {
+         res.status(500).json({ message: 'خطأ في الاتصال' });
+      }
+   }
+};
 
-   export const resetPassword = async (req, res) => {
-      const { email, newPassword } = req.body;
-      try {
+export const resetPassword = async (req, res) => {
+   const { email, newPassword } = req.body;
+   try {
       const existingStudent = await Student.findOne({ email });
-      if (!existingStudent) 
-        return res.status(404).sed("الحساب غير مسجل مسبقا!");
-      
-        const hashPassword = await bcrypt.hash(newPassword,12);
-        const result = await Student.update(student._id, { password: hashPassword });//ارجع له
-        return res.status(200).json({message:"تم تغيير كلمة المرور بنجاح"});
-      }
-      catch (error) {
-        console.log(error);
-        return res.status(500).json({message:"حدث خطأ ما!"});
-      }
-   };
+      if (!existingStudent)
+         return res.status(404).sed("الحساب غير مسجل مسبقا!");
 
-//  //  Complete Profile
-  
-// // update profile
+      await Student.update(student._id, { password: newPassword });//ارجع له
+      return res.status(200).json({ message: "تم تغيير كلمة المرور بنجاح" });
+   }
+   catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "حدث خطأ ما!" });
+   }
+};
 
-export const updateProfileCV = async (req, res) => {
-   const  updateData  = req.body;
-   const  {_id } = req.params;
-   console.log('req.body: ',req.body)
-   console.log('_id: ',_id)
+export const updateStudent = async (req, res) => {
+   const updateData = req.body;
+   const { _id } = req.params;
+   console.log('req.body: ', req.body)
+   console.log('_id: ', _id)
    Student.findOneAndUpdate(
-      _id, 
-      updateData, // user data to be updated from req.body such as Certificates, CollegeName etc...
-      { new: true }, // to return the opdated object
-      (err, doc) => { // CallBack function
-            if (err) {
-               console.log("حدث خظأ ما!");
-               return res.status(400).json({message:'حدث خطأ من الخادم'});
-            }if (!doc) {
-               return res.status(404).json({ message: "المستخدم غير موجود" });
-            }
-               console.log("تم تغيير البيانات بنجاح :", doc);
-               res.status(200).json({message:'تم التحديث بنجاح'});
+      _id,
+      updateData,
+      { new: true },
+      (err, doc) => {
+         if (err) {
+            console.log("حدث خظأ ما!");
+            return res.status(400).json({ message: 'حدث خطأ من الخادم' });
+         } if (!doc) {
+            return res.status(404).json({ message: "المستخدم غير موجود" });
          }
+         console.log("تم تغيير البيانات بنجاح :", doc);
+         res.status(200).json({ message: 'تم التحديث بنجاح' });
+      }
    );
 };
-// // delete profile
-
-export const deleteAccount = async (req, res) => {
+export const deleteStudent = async (req, res) => {
    try {
 
-      const result = await Student.deleteOne(student._id);
-      return res.status(200).json({message:"تم حذف الحساب بنجاح"});
+      await Student.deleteOne(student._id);
+      return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
 
-      } catch (error) {
-      res.status(400) . send({ success: false,msg: error.message });
-      };
+   } catch (error) {
+      res.status(400).send({ success: false, msg: error.message });
+   };
 
 
 };
 
-
-
-
-//   View Student Profile
-export const ViewProfile = async (req, res) => { 
+export const ViewProfile = async (req, res) => {
 
    try {
       const student = await student.findById(req.studentId);
       if (!student) {
-        return res.status(404).json({ message: 'الشركة غير موجودة' });
+         return res.status(404).json({ message: 'الشركة غير موجودة' });
       }
-  
+
       return res.status(200).json(student);
-    } catch (error) {
+   } catch (error) {
       console.error(error);
-      return res.status(500).json({ message:  'خطأ في النظام' });
-    }
+      return res.status(500).json({ message: 'خطأ في الإتصال' });
+   }
 
 };
 
-//   View Company Page
-export const ViewCompanyPage = async (req, res) => { 
+//   View Student Page
+export const ViewStudentPage = async (req, res) => {
    try {
-      const company = await company.findById(req.companyId);
-      if (!company) {
-        return res.status(404).json({ message: 'الشركة غير موجودة' });
+      const student = await student.findById(req.studentId);
+      if (!student) {
+         return res.status(404).json({ message: 'الشركة غير موجودة' });
       }
-  
-      return res.status(200).json(company);
-    } catch (error) {
+
+      return res.status(200).json(student);
+   } catch (error) {
       console.error(error);
-      return res.status(500).json({ message:  'خطأ في النظام' });
-    }
+      return res.status(500).json({ message: 'خطأ في الإتصال' });
+   }
 };
 
 //   Filter The Opportunities
-export const FilterTheOpp = async (req, res) => { 
+export const FilterTheOpp = async (req, res) => {
    const { major, numOfStars } = req.query;
 
    try {
       const evaluationResults = await Evaluation.find({ numOfStars });
       const opportunityIds = evaluationResults.map((evaluation) => evaluation.opportunityId);
-  
+
       const filteredOpportunities = await Opportunity.find({
-        major,
-        _id: { $in: opportunityIds },
+         major,
+         _id: { $in: opportunityIds },
       });
-  
+
       return res.status(200).json(filteredOpportunities);
-    } catch (error) {
+   } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Server Error' });
-    }
+      return res.status(500).json({ message: 'خطأ في الإتصال' });
+   }
 
 }
 
 //   Search For The Opportunity
-export const SearchForTheOpp = async (req, res) => { 
+export const SearchForTheOpp = async (req, res) => {
    const { query } = req.query;
 
    try {
-     // Perform search based on the query
-     const result = await Item.find({ name: { $regex: query, $options: 'i' } }); // Case-insensitive search
- 
-     res.json(result);
+      // Perform search based on the query
+      const result = await Item.find({ name: { $regex: query, $options: 'i' } }); // Case-insensitive search
+
+      res.json(result);
    } catch (error) {
-     console.error(error);
-     res.status(500).json({ error: 'An error occurred while searching.' });
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred while searching.' });
    }
 }
 
 
 //   Registration in the opportunity
-export const RegistrationInTheOpp = async (req, res) => { 
+export const RegistrationInTheOpp = async (req, res) => {
 }
 
 //   Discover Location
-export const DiscoverLocation = async (req, res) => { 
+export const DiscoverLocation = async (req, res) => {
 };
 
 //   View Request
-export const ViewRequest = async (req, res) => { 
+export const ViewRequest = async (req, res) => {
 };
 
-export const test = async (req, res) => { 
+export const test = async (req, res) => {
    // const existingStudent = await Student.find();
    res.json("HELLO");
 };

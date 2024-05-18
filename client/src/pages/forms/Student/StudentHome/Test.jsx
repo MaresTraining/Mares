@@ -25,7 +25,6 @@ const Test = () => {
             const fd = { ...formData };
             for (const key in fd) {
                 const val = user[key]?? "";
-                console.log(key, val)
                 fd[key] = val;
             }
             setFormData(fd);
