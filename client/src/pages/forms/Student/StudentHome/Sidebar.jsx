@@ -22,14 +22,16 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Box from '@mui/material/Box';
 import { useAuthContext } from '../../../../contexts/AuthContext';
+import { useSystemContext } from '../../../../contexts/SystemContext';
 
 
 const drawerWidth = 240;
 
 function PersistentDrawer(props) {
+
   const {signOut}= useAuthContext()
   const Navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const { isDrawerOpen, toggleDrawer} =useSystemContext();
 
   const openProfile = () =>{
     Navigate('/view-student-profile')
@@ -135,16 +137,15 @@ function PersistentDrawer(props) {
       <IconButton
         color="inherit"
         aria-label="open drawer"
-        onClick={() => setOpen(!open)}
+        onClick={() => toggleDrawer(!isDrawerOpen)}
         edge="start"
-        sx={{ mr: 2, ...(open && { display: 'none' }) }}
       >
         <MenuIcon />
       </IconButton>
       <Drawer
         variant="persistent"
         anchor="right"
-        open={open}
+        open={isDrawerOpen}
         sx={{
           width: drawerWidth,
           flexShrink: 0,

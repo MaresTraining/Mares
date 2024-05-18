@@ -1,6 +1,5 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -11,7 +10,7 @@ import CompanyHeader from './CompanyHome/CompanyHeader/CompanyHeader';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSystemContext } from '../../../contexts/SystemContext';
 import { useAuthContext } from '../../../contexts/AuthContext';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const Cinfo = () => {
     const { handleLoading } = useSystemContext()
@@ -63,11 +62,16 @@ const Cinfo = () => {
     return (
         <div style={{maxWidth:"100vw !imaportant"}}>
             <CompanyHeader />
-            <Box maxWidth={1} height={"100vh"} sx={{ overflowY: "auto" }} flexDirection={"column"} justifyContent={'center'} p={2}>
+            <Box 
+            sx= {{
+                paddingX:5,
+                textAlign:'center',
+                 width:1, height:"100vh", alignItems:'center',
+              overflowY: "auto", flexDirection:"column", justifyContent:'center'
+            }} >
 
-                <Grid container direction="column" justifyContent="center" alignItems="center" style={{ height: '135%', width:"90vw" }}>
 
-                    <h2 >معلومات الشركة </h2>
+                    <Typography component={"h2"} variant='h5' marginY={2} fontWeight={"bold"} >معلومات الشركة </Typography>
 
                     <h3 >معلومات عامة </h3>
 
@@ -83,9 +87,10 @@ const Cinfo = () => {
                                 <PersonIcon />
                             ),
                         }}
-                        style={{ width: '50%' }}
+                        sx={{ marginInlineEnd: 4 }}
                     />
                     <TextField
+                        sx={{ marginInlineEnd: 4 }}
                         margin="normal"
                         required
                         name="companyField"
@@ -93,7 +98,6 @@ const Cinfo = () => {
                         value={formData.companyField}
                         onChange={handleChange}
 
-                        style={{ width: '50%' }}
                     />
 
 
@@ -109,10 +113,8 @@ const Cinfo = () => {
                                 <PhoneIcon />
                             ),
                         }}
-                        style={{ width: '50%' }}
+                        sx={{ marginInlineEnd: 4 }}
                     />
-
-
 
                     <h3 >موقع الشركة </h3>
 
@@ -127,7 +129,7 @@ const Cinfo = () => {
                                 <LocationOnIcon />
                             ),
                         }}
-                        style={{ width: '50%', }}
+                        sx={{ marginInlineEnd: 4 }}
                     />
 
 
@@ -143,7 +145,7 @@ const Cinfo = () => {
                                 <LocationCityIcon />
                             ),
                         }}
-                        style={{ width: '50%', }}
+                        sx={{ marginInlineEnd: 4 }}
                     />
 
 
@@ -155,7 +157,7 @@ const Cinfo = () => {
                         value={formData.commercialRegistrationNumber}
                         onChange={handleChange}
 
-                        style={{ width: '50%', }}
+                        sx={{ marginInlineEnd: 4 }}
                     />
                     <h3 >حول العمل</h3>
                     <TextField
@@ -165,7 +167,7 @@ const Cinfo = () => {
                         value={formData.companySector}
                         onChange={handleChange}
 
-                        style={{ width: '50%', }}
+                        style={{ width: '65%', }}
                     />
 
                     <h4>عن الشركة </h4>
@@ -175,7 +177,7 @@ const Cinfo = () => {
                         name="descriptionCompany"
                         value={formData.descriptionCompany}
                         onChange={handleChange}
-                        style={{ width: '50%', minHeight: '100px', marginBottom: '20px' }}
+                        style={{ width: '65%', minHeight: '100px', marginBottom: '20px' }}
                     />
 
 
@@ -203,7 +205,6 @@ const Cinfo = () => {
                         value={formData.facebook}
                         onChange={handleChange}
 
-                        style={{ width: '30%', }}
                     />
 
 
@@ -214,7 +215,6 @@ const Cinfo = () => {
                         value={formData.twitter}
                         onChange={handleChange}
 
-                        style={{ width: '30%', }}
                     />
 
 
@@ -225,7 +225,6 @@ const Cinfo = () => {
                         value={formData.instagram}
                         onChange={handleChange}
 
-                        style={{ width: '30%', }}
                     />
 
                     <TextField
@@ -234,10 +233,8 @@ const Cinfo = () => {
                         label={"لينكد ان"}
                         value={formData.linkedIn}
                         onChange={handleChange}
-                        style={{ width: '30%', }}
                     />
 
-                </Grid>
                 <div style={{ textAlign: "center"}}>
 
                 <Button

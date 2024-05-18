@@ -9,13 +9,13 @@ import { useSystemContext } from '../../../contexts/SystemContext';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 function viewCard(company) {
-  const { companyName, descriptionCompany, socialMedia, comment, image } = company;
+  const { companyName, descriptionCompany, facebook, twitter, instagram, linkedIn, comment, image } = company;
+  const details=  {numOfOpps: 10, };
+
+  
   return (
 
-    <Card style={{ fontFamily: 'Tajawal, sans-serif', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-
-
+    <Card style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ flex: 1, textAlign: 'left', padding: '1rem' }}>
         <Box style={{ flex: 1, textAlign: 'center', padding: '1rem', margin: '10px' }}>
           <img src={image} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
@@ -26,19 +26,34 @@ function viewCard(company) {
         </Box>
 
         <Box style={{ flex: 1, textAlign: 'center', padding: '1rem', border: '3px solid #ccc', margin: '50px' }}>
-          <Typography variant="h5" gutterBottom >
+        <Typography variant="h5" gutterBottom >
             عدد التدريبات التي تم نشرها
-            <br></br>
-            0
           </Typography>
+          <Typography variant="h5" gutterBottom >
+            {details.numOfOpps}
+          </Typography>
+
         </Box>
 
         <Box style={{ flex: 1, textAlign: 'center', padding: '1rem', border: '3px solid #ccc', margin: '50px' }}>
           <Typography variant="h5" gutterBottom >
-            وسائل التواصل الإجتماعي{socialMedia}
+            وسائل التواصل الإجتماعي
           </Typography>
-        </Box>
+          <Typography variant="6" gutterBottom >
+            {facebook}
+          </Typography>
+          <Typography variant="6" gutterBottom >
+            {twitter}
+          </Typography>
+          <Typography variant="6" gutterBottom >
+            {instagram}
+          </Typography>
+          <Typography variant="6" gutterBottom >
+            {linkedIn}
+          </Typography>
 
+        </Box>
+        
       </div>
 
       <div style={{ fontFamily: 'Tajawal, sans-serif', flex: 2, textAlign: "", padding: '1rem' }}>
@@ -96,11 +111,9 @@ export default function ViewCompanyProfile() {
       <CompanyHeader />
       <Box
         sx={{
-          width: '80%',
-          margin: 'auto',
-          marginTop: '20px',
-          marginRight: '300px',
-          marginLeft: '400px',
+          flexDirection: 'column',
+          justifyContent: "center",
+          p: 5
         }}
       >
         <Typography variant="h6" gutterBottom >

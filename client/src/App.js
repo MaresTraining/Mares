@@ -38,13 +38,13 @@ import DisplayUnavailable from './pages/forms/Company/DisplayUnavailable';
 import DisplayCompleted from './pages/forms/Company/DisplayCompleted';
 import ViewCompanyProfile from './pages/forms/Company/ViewCompanyProfile';
 import ViewStudentProfile from './pages/forms/Student/ViewStudentProfile';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop, Box, CircularProgress } from '@mui/material';
 import { useSystemContext } from './contexts/SystemContext';
 import Toast from './components/Toast';
 import { useEffect } from 'react';
 
 function App() {
-  const { toast, error, handleError, showToast, hideToast, loading } = useSystemContext();
+  const { toast, error, isDrawerOpen, handleError, showToast, hideToast, loading } = useSystemContext();
 
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function App() {
   <HeroSection />
 
   return (
-    <div >
+    <Box paddingInlineStart={isDrawerOpen? 28: 0}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/student-sign-in" element={<StudentSignin />} />
@@ -113,7 +113,7 @@ function App() {
         hideToast={hideToast}
       />
 
-    </div>
+    </Box>
 
 
   );

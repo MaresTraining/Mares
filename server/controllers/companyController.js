@@ -8,8 +8,7 @@ export const signinCompany = async (req, res) => {
      if (!company) {
        return res.status(404).json({ message: 'الحساب غير موجود' });
      }
-     const hashedPassword = sha256(password).toString();
-     if (hashedPassword !== company.password) {
+     if (password !== company.password) {
        return res.status(400).json({ message: 'كلمة المرور غير صحيحة' });
      }
  

@@ -8,8 +8,7 @@ export const signin = async (req, res) => {
       if (!student) {
          return res.status(404).json({ message: 'الحساب غير موجود' });
       }
-      const hashedPassword = sha256(password).toString();
-      if (hashedPassword !== student.password) {
+      if (password !== student.password) {
          return res.status(400).json({ message: 'خطأ في كلمة المرور' });
       }
 
@@ -18,7 +17,6 @@ export const signin = async (req, res) => {
       res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 }
-// // Signup
 
 export const signup = async (req, res) => {
    const student = req.body;

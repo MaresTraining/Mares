@@ -57,7 +57,7 @@ export default function OpportunityContextProvider(props) {
   }, [getSession, handleOpportunities, loadOpportunities, loaded, user]);
 
 
-  const saveOpportunity = async (opportunity) => {
+  const addOpportunity = async (opportunity) => {
     opportunity.companyId = user._id;
     try {
       setLoading(true);
@@ -103,7 +103,8 @@ export default function OpportunityContextProvider(props) {
   const value = {
     opportunities,
     updateOportunity,
-    saveOpportunity
+    addOpportunity,
+    loadOpportunities,
   };
 
   return (

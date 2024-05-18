@@ -6,7 +6,7 @@ import { useSystemContext } from "./SystemContext";
 
 const Context = createContext();
 export default function AuthContextProvider(props) {
-  const { goToPage, showToast, handleError, setLoading, setSession, getSession, resetSession } = useSystemContext();
+  const { goToPage, showToast, closeDrawer, handleError, setLoading, setSession, getSession, resetSession } = useSystemContext();
   const [hasLogin, setHasLogin] = useState(false);
   const [isStudent, setIsStudent] = useState();
   const [isCompany, setIsCompany] = useState();
@@ -77,8 +77,10 @@ export default function AuthContextProvider(props) {
     }
   };
 
-  const updateUser = async ({data, _id, role}) => {
+  const updateUser = async (data, _id, role) => {
     try {
+      console.log(data, user._id, user.role)
+
       setLoading(true);
       const dataToUpdate = Object.fromEntries(
         Object.keys(data)
@@ -127,6 +129,7 @@ export default function AuthContextProvider(props) {
     handleUser(null);
     resetSession();
     goToPage("/");
+    closeDrawer();
   }
 
   const resetPassword = async ({ secretQuestion, secretAnswer }) => {

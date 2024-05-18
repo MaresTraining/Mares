@@ -57,8 +57,8 @@ export default function SystemContextProvider(props) {
     setToast({ type: "info", text: null, open: false});
   };
 
-  const openDrawer = () => {
-    setIsDrawerOpen(true);
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
   const closeDrawer = () => {
     setIsDrawerOpen(false);
@@ -98,8 +98,7 @@ export default function SystemContextProvider(props) {
     isDrawerOpen,
     active,
     setActive,
-    closeDrawer,
-    openDrawer,
+    toggleDrawer,
     toast,
     showToast,
     hideToast,
@@ -108,6 +107,7 @@ export default function SystemContextProvider(props) {
     screenWidth,
     screenHeight,
     goToPage,
+    closeDrawer,
   };
 
   return (

@@ -7,12 +7,12 @@ export const addOpportunity = async (req, res) => {
    try {
       const existingOpportunity = await Opportunity.findOne({ companyId: data.companyId, opportunityName: data.opportunityName });
       console.log('existingOpportunity: ', existingOpportunity);
-      if (!existingOpportunity) {
+      if (existingOpportunity) {
          console.log("opportunity dosen't saved")
          return res.status(400).json({ message: "لقد قمت بإضافة هذه الفرصة مسبقا" });
       }
       const opp = await Opportunity.create(data)
-      res.status(200).json(app);
+      res.status(200).json(opp);
    } catch (error) {
       if (error.name === 'ValidationError') {
          console.log(error.message)

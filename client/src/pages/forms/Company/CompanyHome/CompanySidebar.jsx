@@ -21,6 +21,7 @@ import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Box from '@mui/material/Box';
 import { useAuthContext } from '../../../../contexts/AuthContext';
+import { useSystemContext } from '../../../../contexts/SystemContext';
 
 
 const drawerWidth = 240;
@@ -28,9 +29,8 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const {signOut, isCompany, user}= useAuthContext()
 
-  const { window } = props;
   const Navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const {isDrawerOpen, toggleDrawer} = useSystemContext();
 
   const ClickHandler = () =>{
     Navigate('/cinfo')
@@ -46,7 +46,7 @@ function ResponsiveDrawer(props) {
   }
 
   const handleDrawerToggle = () => {
-    setOpen(!open);
+    toggleDrawer(!isDrawerOpen);
   };
 
   const drawer = (
@@ -86,7 +86,9 @@ function ResponsiveDrawer(props) {
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={()=>{
+            Navigate('/create-opportunity');
+          }}>
             <ListItemIcon>
               <SchoolIcon />
             </ListItemIcon>
@@ -95,7 +97,9 @@ function ResponsiveDrawer(props) {
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton>
+        <ListItemButton onClick={()=>{
+            Navigate('/manage-opportunities');
+          }}>
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
@@ -104,7 +108,9 @@ function ResponsiveDrawer(props) {
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton>
+        <ListItemButton onClick={()=>{
+            Navigate('/display-published');
+          }}>
             <ListItemIcon>
             <DescriptionIcon />
             </ListItemIcon>
@@ -113,7 +119,9 @@ function ResponsiveDrawer(props) {
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton>
+        <ListItemButton onClick={()=>{
+            Navigate('/display-completed');
+          }}>
             <ListItemIcon>
             <DescriptionIcon />
 
@@ -123,7 +131,9 @@ function ResponsiveDrawer(props) {
         </ListItem>
 
         <ListItem disablePadding>
-          <ListItemButton>
+        <ListItemButton onClick={()=>{
+            Navigate('/display-unavailable');
+          }}>
             <ListItemIcon>
             <DescriptionIcon />
 
@@ -161,7 +171,6 @@ function ResponsiveDrawer(props) {
           aria-label="toggle drawer"
           onClick={handleDrawerToggle}
           edge="start"
-          sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton>
@@ -169,7 +178,7 @@ function ResponsiveDrawer(props) {
       <Drawer
         variant="persistent"
         anchor="right"
-        open={open}
+        open={isDrawerOpen}
         sx={{
           width: drawerWidth,
           flexShrink: 0,

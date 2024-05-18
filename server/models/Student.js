@@ -33,7 +33,7 @@ const studentSchema = Schema({
 });
 
 studentSchema.methods.saveStudent = function() {
-  return this.save(); // استخدام دالة save() المدمجة في Mongoose لحفظ البيانات في قاعدة البيانات
+  return this.save();
 };
 
 

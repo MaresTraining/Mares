@@ -1,9 +1,12 @@
 import express from 'express';
 const router = express.Router();
 
-import { signin, signup, test ,resetPassword,updateStudent,deleteStudent,
-    ViewProfile,FilterTheOpp, SearchForTheOpp,RegistrationInTheOpp,
-     DiscoverLocation,ViewRequest} from '../controllers/studentController.js';
+import {
+    signin, signup, test, resetPassword, updateStudent, deleteStudent,
+    ViewProfile, FilterTheOpp, SearchForTheOpp, RegistrationInTheOpp,
+    DiscoverLocation, ViewRequest
+} from '../controllers/studentController.js';
+
 router.post('/sign-in', signin);
 router.post('/sign-up', signup);
 router.get('/test', test);

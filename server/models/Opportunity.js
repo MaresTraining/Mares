@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const { Schema, model, SchemaTypes } = mongoose;
 
 const Opportunitieschema = Schema({
+  status: {type: String , default: "منشورة"},
   name: {type: String},
   companyId: {type: SchemaTypes.ObjectId, ref: 'Company', required: true}, 
   generalSpecializationField: {type: String},
