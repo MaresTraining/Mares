@@ -9,12 +9,17 @@ export default function OpportunityContextProvider(props) {
   const { user, isCompany } = useAuthContext();
   const { goToPage, showToast, handleError, setLoading, setSession, getSession, resetSession } = useSystemContext();
   const [opportunities, setOpportunities] = useState(getSession("opportunities") ?? []);
+  const [selectedOpp, setSelectesOpp] = useState();
   const [loaded, setLoaded] = useState(false);
 
   const handleOpportunities = useCallback((opportunities) => {
     setSession("opportunities", opportunities);
     setOpportunities(opportunities);
   }, [setSession])
+
+  const handleSelectedOpp  = (opp) => {
+    setSelectesOpp(opp);
+  }
 
   const handleAddOpportunity = (opportunity) => {
     const _opportunities = opportunities.map((v, i) => {
@@ -47,7 +52,7 @@ export default function OpportunityContextProvider(props) {
       setLoading(false);
      console.log(error.response?.data?.message || error.message);
     }
-  }, [handleOpportunities, setLoading, user]);
+  }, [handleOpportunities, isCompany, setLoading, user]);
 
   useEffect(() => {
     if (!loaded && user) {
@@ -105,6 +110,8 @@ export default function OpportunityContextProvider(props) {
     updateOportunity,
     addOpportunity,
     loadOpportunities,
+    handleSelectedOpp ,
+    selectedOpp,
   };
 
   return (

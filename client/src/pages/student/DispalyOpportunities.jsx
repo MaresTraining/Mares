@@ -3,8 +3,11 @@ import StudentHeader from 'components/student/StudentHeader';
 import Search from './Search'
 import { Box, Typography, Grid, Card, CardContent, CardActions, CardMedia, Button } from '@mui/material';
 import { useOpportunityContext } from 'contexts/OpportunityContext';
+import { useSystemContext } from 'contexts/SystemContext';
 
 function OpportunityCard({ opportunity, ...props }) {
+  const {handleSelectedOpp} = useOpportunityContext();
+  const {goToPage} = useSystemContext();
   const { _id, oppName, trainingType, trainingDuration, city, imageURL, numberOfTrainees } = opportunity;
   return (
     <Card sx={{ maxWidth: 345, bgcolor: '#efefef', border: '3px solid #ccc', fontFamily: 'Tajawal, sans-serif' }}>
@@ -31,7 +34,10 @@ function OpportunityCard({ opportunity, ...props }) {
           المدينة: {city}
         </Typography>
         <CardActions>
-          <Button size="small">عرض التفاصيل</Button>
+        <Button onClick={()=>{
+          handleSelectedOpp(opportunity)
+          goToPage("/view-opp-details")
+        }} size="small">عرض التفاصيل</Button>
         </CardActions>
       </CardContent>
     </Card>
@@ -43,7 +49,7 @@ const DispalyOpportunities = () => {
   const { opportunities, loadOpportunities } = useOpportunityContext();
 
   return (
-    <div>
+    <Box sx={{width:1}}>
 
 
       <StudentHeader />
@@ -68,7 +74,7 @@ const DispalyOpportunities = () => {
       </Grid>
 
 
-    </div>
+    </Box>
   );
 };
 

@@ -41,6 +41,7 @@ import { Backdrop, Box, CircularProgress } from '@mui/material';
 import { useSystemContext } from './contexts/SystemContext';
 import Toast from './components/Toast';
 import { useEffect } from 'react';
+import ViewOppDetails from 'pages/ViewOppDetails';
 
 function App() {
   const { toast, error, isDrawerOpen, handleError, showToast, hideToast, loading } = useSystemContext();
@@ -83,6 +84,7 @@ function App() {
         <Route path="/display-completed" element={<DisplayCompleted />} />
         <Route path="/view-company-profile" element={<ViewCompanyProfile />} />
         <Route path="/view-student-profile" element={<ViewStudentProfile />} />
+        <Route path="/view-opp-details" element={<ViewOppDetails />} />
 
         <Route path="/comment-box" element={<CommentBox />} />
 

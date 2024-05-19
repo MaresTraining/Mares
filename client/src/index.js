@@ -13,8 +13,6 @@ import ApplicantContextProvider from './contexts/ApplicantContext';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 export const API = "http://localhost:5000";
-const dayjs = require('dayjs')
-dayjs.locale("ar")
 const theme = createTheme({
   direction: 'rtl',
   typography: {

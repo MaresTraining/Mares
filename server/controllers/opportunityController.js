@@ -58,8 +58,10 @@ export const deleteOpportunity = async (req, res) => {
 };
 
 export const getOpportunities = async (req, res) => {
+   console.log(req.body)
    try {
-      const data = await Opportunity.findOne();
+      const data = await Opportunity.find();
+      console.log(data)
       res.status(200).json(data);
 
    } catch (error) {

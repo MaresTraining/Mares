@@ -2,8 +2,11 @@
 import { useOpportunityContext } from 'contexts/OpportunityContext';
 import CompanyHeader from 'components/company/CompanyHeader';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { useSystemContext } from 'contexts/SystemContext';
 
 function OpportunityCard({opportunity, ...props}) {
+  const {handleSelectedOpp} = useOpportunityContext();
+  const {goToPage} = useSystemContext();
   const {  _id,  oppName,trainingType, trainingDuration, city, imageURL, numberOfTrainees }= opportunity;
 
     return (
@@ -32,7 +35,10 @@ function OpportunityCard({opportunity, ...props}) {
             المدينة: {city}
           </Typography>
           <CardActions>
-            <Button size="small">عرض التفاصيل</Button>
+          <Button onClick={()=>{
+          handleSelectedOpp(opportunity)
+          goToPage("/view-opp-details")
+        }} size="small">عرض التفاصيل</Button>
           </CardActions>
         </CardContent>
       </Card>

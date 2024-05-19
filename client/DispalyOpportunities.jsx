@@ -3,8 +3,12 @@ import Sidebar from './StudentHome/Sidebar';
 import StudentHeader from './StudentHome/StudentHeader/StudentHeader';
 import { Link } from "react-router-dom";
 import { useOpportunityContext } from "contexts/OpportunityContext";
+import { useSystemContext } from "contexts/SystemContext";
 
 function OpportunityCard({opportunity, ...props}) {
+  const {handleSelectedOpp} = useOpportunityContext();
+  const {goToPage} = useSystemContext();
+
   const {  _id,  oppName,trainingType, trainingDuration, city, imageURL, numberOfTrainees }= opportunity;
     return (
       <Card sx={{ maxWidth: 345 }}>
@@ -37,7 +41,10 @@ function OpportunityCard({opportunity, ...props}) {
 
 
       <CardActions>
-        <Button size="small">عرض التفاصيل</Button>
+        <Button onClick={()=>{
+          handleSelectedOpp(opportunity)
+          goToPage("/view-opp-details")
+        }} size="small">عرض التفاصيل</Button>
       </CardActions>
 
 
