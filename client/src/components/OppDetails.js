@@ -36,7 +36,9 @@ const OppDetails = ({ opp }) => {
                 <Typography variant="h6" style={{ width: "50%", marginBottom: '10px' }}>واجبات الشاغر التدريبي: {opp.duties}</Typography>
                 <Typography variant="h6" style={{ width: "50%", marginBottom: '10px' }}>فوائد التدريب: {opp.benefits}</Typography>
                 {isStudent &&
-                    <Button
+                   
+                   
+                   <Button
                         variant="contained"
                         style={{padding:8, fontSize:"14px", fontWeight:"bold", width:"20%", backgroundColor: 'mediumaquamarine', color: 'black' }}
                         onClick={() => {

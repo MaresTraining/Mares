@@ -28,33 +28,42 @@ const OpportunityList = ({ onOpportunitySelect }) => {
 
 
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            <Link to="/SelectStudent" style={{ textDecoration: 'none', marginLeft: '100px', marginRight: '70px' ,marginTop:'80px'}}>
-                <Button
-                    variant="contained"
-                    startIcon={<PersonAddIcon />}
-                    sx={{
-                        fontFamily: 'Tajawal, sans-serif',
-                        backgroundColor: 'mediumaquamarine',
-                        '& .MuiButton-startIcon': {
-                            marginLeft: '8px', // Adjust the space between icon and text
-                        },
-                    }}
-                >
-                    الطلاب المتقدمين
-                </Button>
+            <Link to="/select-student" style={{ textDecoration: 'none', marginLeft: '100px', marginRight: '70px' ,marginTop:'80px'}}>
+            <Button
+    variant="contained"
+    startIcon={<PersonAddIcon />}
+    sx={{
+        fontFamily: 'Tajawal, sans-serif',
+        backgroundColor: 'mediumaquamarine',
+        color: 'black', // Set the font color to black
+        '& .MuiButton-startIcon': {
+            marginLeft: '8px', // Adjust the space between icon and text
+        },
+        '&:hover': {
+            backgroundColor: '#efefef', // Set the hover color to #efefef
+        },
+    }}
+>
+    الطلاب المتقدمين
+</Button>
+
             </Link>
 
 
          
-                <Link to="/AcceptedStudent" style={{ textDecoration: 'none',marginTop:'80px' }}>
+                <Link to="/accepted-student" style={{ textDecoration: 'none',marginTop:'80px' }}>
                     <Button
                         variant="contained"
                         startIcon={<HowToRegIcon />}
                         sx={{
                             fontFamily: 'Tajawal, sans-serif',
                             backgroundColor: 'mediumaquamarine',
+                             color: 'black', // Set the font color to black
                             '& .MuiButton-startIcon': {
                                 marginLeft: '8px', // Adjust the space between icon and text
+                            },
+                            '&:hover': {
+                                backgroundColor: '#efefef', // Set the hover color to #efefef
                             },
                         }}
                        

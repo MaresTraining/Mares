@@ -55,9 +55,9 @@ const DispalyOpportunities = () => {
       <StudentHeader />
       <Search />
 
-      <Typography style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold' }}>
+      <h2 style={{ fontFamily: 'Tajawal, sans-serif', fontWeight: 'bold', marginRight: '600px' }}>
         الفرص التدريبية:
-      </Typography>
+      </h2>
 
 
       <Grid container spacing={2} sx={{ width: '80%', margin: 'auto', marginTop: '20px', marginRight: '300px', marginLeft: '500px' }}>
