@@ -2,53 +2,53 @@ import Company from '../models/Company.js';
 
 export const signinCompany = async (req, res) => {
    const { email, password } = req.body;
-   console.log("company email:", email); 
+   console.log("company email:", email);
    try {
-      const company = await Company.findOne({ email:email });
-     if (!company) {
-       return res.status(404).json({ message: 'الحساب غير موجود' });
-     }
-     if (password !== company.password) {
-       return res.status(400).json({ message: 'كلمة المرور غير صحيحة' });
-     }
- 
-     res.status(200).json(company);
+      const company = await Company.findOne({ email: email });
+      if (!company) {
+         return res.status(404).json({ message: 'الحساب غير موجود' });
+      }
+      if (password !== company.password) {
+         return res.status(400).json({ message: 'كلمة المرور غير صحيحة' });
+      }
+
+      res.status(200).json(company);
    } catch (error) {
-     res.status(500).json({ message: 'خطأ في الإتصال' });
+      res.status(500).json({ message: 'خطأ في الإتصال' });
    }
- };
- 
+};
+
 export const signupCompany = async (req, res) => {
    const company = req.body;
    console.log("company", company);
    try {
-     const result = await Company.create(company);
-     res.status(200).json(result);
+      const result = await Company.create(company);
+      res.status(200).json(result);
    } catch (error) {
-     if (error.name === 'ValidationError') {
-      console.log(error.message)
-       res.status(400).json({ message: `خطأ في التحقق: ${error.message}` });
-     } else if (error.code && error.code === 11000) { 
-       res.status(400).json({ message: 'هذا الحساب مسجل بالفعل' });
-     } else {
-       res.status(500).json({ message: 'خطأ في الإتصال' });
-     }
+      if (error.name === 'ValidationError') {
+         console.log(error.message)
+         res.status(400).json({ message: `خطأ في التحقق: ${error.message}` });
+      } else if (error.code && error.code === 11000) {
+         res.status(400).json({ message: 'هذا الحساب مسجل بالفعل' });
+      } else {
+         res.status(500).json({ message: 'خطأ في الإتصال' });
+      }
    }
- };
+};
 
 export const resetPassword = async (req, res) => {
    const { email, newPassword } = req.body;
    try {
       const existingUser = await Company.findOne({ email });
-      if (!existingUser)
+      if (!existingUser) {
          return res.status(404).sed("الحساب غير مسجل مسبقا!");
-
+      }
       const result = await Company.update(Company._id, { password: newPassword });//ارجع له
-      return res.status(200).json({ message: "تم تغيير كلمة المرور بنجاح" });
+      res.status(200).json({ message: "تم تغيير كلمة المرور بنجاح" });
    }
    catch (error) {
       console.log(error);
-      return res.status(500).json({ message: "حدث خطأ ما!" });
+      res.status(500).json({ message: "حدث خطأ ما!" });
    }
 };
 
@@ -88,7 +88,7 @@ export const updateCompany = async (req, res) => {
 export const deleteAccount = async (req, res) => {
    try {
       const result = await Company.deleteOne(Company._id);
-      return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
+      res.status(200).json({ message: "تم حذف الحساب بنجاح" });
 
    } catch (error) {
       res.status(400).send({ success: false, msg: error.message });

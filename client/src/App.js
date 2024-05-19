@@ -1,43 +1,42 @@
 
-import './App.css'
+import 'assets/css/App.css'
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/home/Home";
+import Home from "./pages/Home";
 
 
 // import Student from "./pages/forms/Student/Student";
 
-import StudentSignup from "./pages/forms/Student/StudentSignup";
-import StudentSignin from "./pages/forms/Student/StudentSignin";
-import ResetPassword from "./pages/forms/ResetPassword/ResetPassword"
+import StudentSignup from "./pages/student/StudentSignup";
+import StudentSignin from "./pages/student/StudentSignin";
+import ResetPassword from "./pages/ResetPassword"
 import Footer from "./components/footer/Footer";
-import HeroSection from "./pages/home/HeroSection/HeroSection";
+import HeroSection from "./components/HeroSection";
 //Student
-import StudentHome from "./pages/forms/Student/StudentHome/StudentHome";
-import Test from "./pages/forms/Student/StudentHome/Test";
-import Profile from "./pages/forms/Student/StudentProfile/Profile";
-import Resume from "./pages/forms/Student/StudentProfile/Resume";
+import StudentHome from "./pages/student/StudentHome";
+import Profile from "./pages/student/Profile";
+import Resume from "./pages/student/Resume";
 
 //Company 
-import Company from "./pages/forms/Company/Company";
-import CompanySignin from "./pages/forms/Company/CompanySignin";
-import CompanySignup from "./pages/forms/Company/CompanySignup";
+import Company from "./pages/Company/Company";
+import CompanySignin from "./pages/Company/CompanySignin";
+import CompanySignup from "./pages/Company/CompanySignup";
 ////////////////
 // Material UI imports
 
-import CompanyHome from './pages/forms/Company/CompanyHome/CompanyHome';
-import CreateOpportunity from './pages/forms/Company/CreateOpportunity';
-import Cinfo from './pages/forms/Company/Cinfo';
-import DispalyOpportunities from './pages/forms/Student/DispalyOpportunities';
-import ManageRequests from './pages/forms/Company/ManageRequests';
-import ViewRequests from './pages/forms/Student/ViewRequests';
-import SelectStudent from './pages/forms/Company/SelectStudent';
-import AcceptedStudent from './pages/forms/Company/AcceptedStudent';
-import CommentBox from './pages/forms/Student/CommentBox';
-import DisplayPublished from './pages/forms/Company/DisplayPublished';
-import DisplayUnavailable from './pages/forms/Company/DisplayUnavailable';
-import DisplayCompleted from './pages/forms/Company/DisplayCompleted';
-import ViewCompanyProfile from './pages/forms/Company/ViewCompanyProfile';
-import ViewStudentProfile from './pages/forms/Student/ViewStudentProfile';
+import CompanyHome from './pages/Company/CompanyHome';
+import CreateOpportunity from './pages/Company/CreateOpportunity';
+import Cinfo from './pages/Company/Cinfo';
+import DispalyOpportunities from './pages/student/DispalyOpportunities';
+import ManageRequests from './pages/Company/ManageRequests';
+import ViewRequests from './pages/student/ViewRequests';
+import SelectStudent from './pages/Company/SelectStudent';
+import AcceptedStudent from './pages/Company/AcceptedStudent';
+import CommentBox from './pages/student/CommentBox';
+import DisplayPublished from './pages/Company/DisplayPublished';
+import DisplayUnavailable from './pages/Company/DisplayUnavailable';
+import DisplayCompleted from './pages/Company/DisplayCompleted';
+import ViewCompanyProfile from './pages/Company/ViewCompanyProfile';
+import ViewStudentProfile from './pages/student/ViewStudentProfile';
 import { Backdrop, Box, CircularProgress } from '@mui/material';
 import { useSystemContext } from './contexts/SystemContext';
 import Toast from './components/Toast';

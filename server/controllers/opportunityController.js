@@ -5,7 +5,7 @@ export const addOpportunity = async (req, res) => {
    const data = req.body;
    console.log(req.body);
    try {
-      const existingOpportunity = await Opportunity.findOne({ companyId: data.companyId, opportunityName: data.opportunityName });
+      const existingOpportunity = await Opportunity.findOne({ companyId: data.companyId, oppName: data.oppName });
       console.log('existingOpportunity: ', existingOpportunity);
       if (existingOpportunity) {
          console.log("opportunity dosen't saved")
@@ -49,7 +49,7 @@ export const updateOpportunity = async (req, res) => {
 export const deleteOpportunity = async (req, res) => {
    try {
       await Opportunity.deleteOne(Opportunity._id);
-      return res.status(200).json({ message: "تم حذف الفرصة بنجاح" });
+      res.status(200).json({ message: "تم حذف الفرصة بنجاح" });
 
    } catch (error) {
       res.status(400).send({ success: false, msg: error.message });
@@ -59,11 +59,11 @@ export const deleteOpportunity = async (req, res) => {
 export const getOpportunities = async (req, res) => {
    try {
       const data = await Opportunity.findOne();
-      return res.status(200).json(data);
+      res.status(200).json(data);
 
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+      res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 }
 
@@ -71,26 +71,30 @@ export const getCompanyOpportunities = async (req, res) => {
    const { companyId } = req.params;
    try {
       const data = await Opportunity.find({ companyId });
-      return res.status(200).json(data);
+      res.status(200).json(data);
 
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+      res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 }
 
 export const getStudentOpportunities = async (req, res) => {
+   const { studentId } = req.params;
    try {
-      const applicants = await getStudentApplicants(req, res)
-      const data = [];
-      for (const key in applicants) {
-         const applicant = applicants[key];
-         data.push(await Opportunity.find({ _id: applicant.opportunityId }));
+      const applicants = await Applicant.find({ studentId });
+      if (!applicants) {
+         return res.status(404).json({ message: 'لا توجد طلبات مسجلة' });
       }
-      return res.status(200).json(data);
+      const opportunityIds = applicants.map(applicant => applicant.opportunityId);
+      const uniqueOpportunityIds = [...new Set(opportunityIds)];
+      const opportunities = await Opportunity.find({ _id: { $in: uniqueOpportunityIds } });
+      res.status(200).json(opportunities);
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+      if (!res.headersSent) {
+         res.status(500).json({ message: 'خطأ في الإتصال' });
+      }
    }
 }
 
@@ -100,9 +104,9 @@ export const getOpportunity = async (req, res) => {
 
    try {
       const data = await Opportunity.findOne({ _id: opportunityId });
-      return res.status(200).json(data);
+      res.status(200).json(data);
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+      res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 }

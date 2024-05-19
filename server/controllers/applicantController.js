@@ -48,7 +48,7 @@ export const addApplicant = async (req, res) => {
          console.log(error.message)
          res.status(400).json({ message: `خطأ في التحقق: ${error.message}` });
       } else {
-         return res.status(500).json({ message: 'خطأ في الإتصال' });
+          res.status(500).json({ message: 'خطأ في الإتصال' });
       }
    }
 }

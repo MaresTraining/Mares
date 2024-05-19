@@ -44,11 +44,11 @@ export const resetPassword = async (req, res) => {
          return res.status(404).sed("الحساب غير مسجل مسبقا!");
 
       await Student.update(student._id, { password: newPassword });//ارجع له
-      return res.status(200).json({ message: "تم تغيير كلمة المرور بنجاح" });
+       res.status(200).json({ message: "تم تغيير كلمة المرور بنجاح" });
    }
    catch (error) {
       console.log(error);
-      return res.status(500).json({ message: "حدث خطأ ما!" });
+       res.status(500).json({ message: "حدث خطأ ما!" });
    }
 };
 
@@ -77,7 +77,7 @@ export const deleteStudent = async (req, res) => {
    try {
 
       await Student.deleteOne(student._id);
-      return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
+       res.status(200).json({ message: "تم حذف الحساب بنجاح" });
 
    } catch (error) {
       res.status(400).send({ success: false, msg: error.message });
@@ -94,10 +94,10 @@ export const ViewProfile = async (req, res) => {
          return res.status(404).json({ message: 'الشركة غير موجودة' });
       }
 
-      return res.status(200).json(student);
+       res.status(200).json(student);
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+       res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 
 };
@@ -110,10 +110,10 @@ export const ViewStudentPage = async (req, res) => {
          return res.status(404).json({ message: 'الشركة غير موجودة' });
       }
 
-      return res.status(200).json(student);
+       res.status(200).json(student);
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+       res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 };
 
@@ -130,10 +130,10 @@ export const FilterTheOpp = async (req, res) => {
          _id: { $in: opportunityIds },
       });
 
-      return res.status(200).json(filteredOpportunities);
+       res.status(200).json(filteredOpportunities);
    } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'خطأ في الإتصال' });
+       res.status(500).json({ message: 'خطأ في الإتصال' });
    }
 
 }
@@ -146,7 +146,7 @@ export const SearchForTheOpp = async (req, res) => {
       // Perform search based on the query
       const result = await Item.find({ name: { $regex: query, $options: 'i' } }); // Case-insensitive search
 
-      res.json(result);
+      res.status(200).json(result);
    } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'An error occurred while searching.' });
