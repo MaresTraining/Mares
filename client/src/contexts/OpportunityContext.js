@@ -30,10 +30,10 @@ export default function OpportunityContextProvider(props) {
 
   const loadOpportunities = useCallback(async () => {
     const userId = user._id;
-    const role = user.role;
     try {
       setLoading(true);
-      const response = await axios.get(`${API}/opportunity/${role}/${userId}`);
+      const link= `${API}/opportunity${isCompany?"/compnay/"+userId: ""}`;
+      const response = await axios.get(link);
       setLoading(false);
       if (response.status === 200) {
         const _opportunities = response.data;

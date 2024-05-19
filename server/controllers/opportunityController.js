@@ -1,3 +1,4 @@
+import Applicant from '../models/Applicant.js';
 import Opportunity from '../models/Opportunity.js';
 import { getStudentApplicants } from './applicantController.js';
 

@@ -12,7 +12,7 @@ export const signin = async (req, res) => {
          return res.status(400).json({ message: 'خطأ في كلمة المرور' });
       }
 
-      res.status(200).json({ id: student._id, email: student.email, role: student.role });
+      res.status(200).json(student);
    } catch (error) {
       res.status(500).json({ message: 'خطأ في الإتصال' });
    }

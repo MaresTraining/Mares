@@ -20,11 +20,15 @@ const Test = () => {
         dateOfBirth: '',
         city: ''
     });
+
+    
     React.useEffect(() => {
         if (user && isLoading) {
             const fd = { ...formData };
-            for (const key in fd) {
+            for (const key in user) {
                 const val = user[key]?? "";
+                if(key!== "_id")
+                console.log(key, val)
                 fd[key] = val;
             }
             setFormData(fd);
@@ -37,14 +41,17 @@ const Test = () => {
         handleLoading(true);
     }
 
+
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSave = async () => {
-        updateUser(formData, user._id, "student")
-    };
+    const handleSave = () => {
+        updateUser(formData, user._id, user.role);
+    }
+
 
     return (
         <Grid container direction="column" justifyContent="flex-start" alignItems="center" style={{ height: '100vh' }}>
@@ -128,7 +135,7 @@ const Test = () => {
       >
       <span> حفظ</span> 
   
-      </Button  >
+      </Button>
             
         </Grid>
     );

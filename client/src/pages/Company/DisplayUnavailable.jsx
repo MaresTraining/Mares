@@ -2,14 +2,10 @@
 import CompanyHeader from 'components/company/CompanyHeader';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import { useOpportunityContext } from 'contexts/OpportunityContext';
-
 function OpportunityCard({ opportunity, ...props }) {
   const { _id, oppName, trainingType, trainingDuration, city, imageURL, numberOfTrainees } = opportunity;
   let status; // الحالة الافتراضية
-
   status = 'available'; // الحالة الافتراضية
-
-
   if (status)
     return (
 
